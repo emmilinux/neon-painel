@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>utils.js</file>
+    </qresource>
+    <qresource prefix="/launchers">
+        <file>Application.qml</file>
+    </qresource>
+    <qresource prefix="/plugins">
+        <file>NeonMenu.qml</file>
+    </qresource>
+</RCC>
