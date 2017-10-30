@@ -172,16 +172,22 @@ void Xlibutil::xminimize(Window window)
 
 Window* Xlibutil::xwindows(Display *display, unsigned long *size)
 {
-    XFlush(display);
-    Window *client_list;
-    unsigned char *data;
-    int status;
+    if (display)
+    {
+        Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
+        XFlush(display);
+        Atom actual_type;
+        int actual_format;
+        unsigned long bytes_after;
+        unsigned char *prop;
 
-    data = this->windowProperty(display, DefaultRootWindow(display), "_NET_CLIENT_LIST", size, &status);
+        int status = XGetWindowProperty(display, DefaultRootWindow(display), atom, 0, 4096 / 4, False, AnyPropertyType, &actual_type, &actual_format, size, &bytes_after, &prop);
 
-    client_list = (Window *)((unsigned long *)data);
+        Window *lists = (Window *)((unsigned long *)prop);
+        return lists;
+    }
 
-    return client_list;
+    return NULL;
 }
 
 Window Xlibutil::xwindowID(int pid)
@@ -291,12 +297,12 @@ bool Xlibutil::xisActive(QString wmclass)
             if (wmclass == QString(this->xwindowClass(lists[i])))
             {
                 XFree(prop);
-                return true;
+                return 1;
             }
         }
     }
 
-    return false;
+    return 0;
 }
 
 void Xlibutil::xminimizeByClass(QString wmclass)
@@ -390,5 +396,35 @@ bool Xlibutil::xwindowExist(QString wmclass)
     }
 
     return false;
+}
+
+QString Xlibutil::xwindowLauncher(Window window)
+{
+    Display *display = QX11Info::display();
+    unsigned char *data;
+    unsigned long nitems;
+    QString launcher;
+    int status;
+
+    data = this->windowProperty(display, window, "_BAMF_DESKTOP_FILE", &nitems, &status);
+    launcher = (char *)data;
+
+    return launcher;
+}
+
+void Xlibutil::xaddDesktopFile(int pid, QString arg)
+{
+    //sleep(2);
+    Display *display = QX11Info::display();
+    //unsigned char* deskfile = (unsigned char*)"/usr/share/applications/xfce4-terminal.desktop";
+    unsigned char* deskfile = (unsigned char*)arg.toUtf8().constData();
+    int status;
+
+    if(display)
+    {
+        XFlush(display);
+        Atom atom = XInternAtom(display, "_BAMF_DESKTOP_FILE", False);
+        status = XChangeProperty(display, this->xwindowID(pid), atom, XA_STRING, 8, PropModeReplace, deskfile, arg.length());
+    }
 }
 

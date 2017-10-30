@@ -14,6 +14,7 @@ Rectangle {
     property int pid: 0
     property string pidname: ""
     property bool minimize: true
+    property var destak: destak
 
     signal create
     signal destroy
@@ -29,8 +30,8 @@ Rectangle {
     Rectangle {
         id: destak
         x: 0
-        y: parent.height - 2
-        height: 2
+        y: parent.height - 1.5
+        height: 1.5
         width: parent.width
         color: "#007fff"
         visible: false
@@ -58,14 +59,18 @@ Rectangle {
 
         onClicked: {
             neonMenu.visible = false
+            neonMenu.textSearch.focus = false
+            neonMenu.addApps()
             main.clickOpc = main.startOpc
 
             if (!_instance) {
+
                 pid = Context.exec(exec)
                 _instance = true
+
             } else {
 
-                if (!Context.isMinimized(pidname)) {
+                if (!Context.isMinimized(pidname) && Context.isActive(pidname)) {
                     Context.manyMinimizes(pidname)
                     minimize = false;
                     // fix bug, but why this bug?
@@ -91,5 +96,4 @@ Rectangle {
         }
 
     }
-
 }

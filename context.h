@@ -17,7 +17,11 @@
 #include <QWindow>
 #include <QColor>
 #include <QRgb>
-
+#include <QDir>
+#include <QDrag>
+#include <QMimeData>
+#include <QImage>
+#include <QPixmap>
 
 #include "xlibutil.h"
 
@@ -40,6 +44,10 @@ public:
     Q_INVOKABLE void manyActives(QString pidname);
     Q_INVOKABLE void actives(int pid);
     Q_INVOKABLE void changeThemeColor(QString rgb);
+    Q_INVOKABLE int isActive(QString pidname);
+    Q_INVOKABLE QStringList applications();
+    Q_INVOKABLE void dragDrop(QString icone, QString app);
+    Q_INVOKABLE void addDesktopFile(int pid, QString desktopFile);
 
 protected:
     Window windowId(int pid);
@@ -52,9 +60,6 @@ private:
     QString launcherFix(QString pro);
     QScreen *screen = QApplication::screens().at(0);
     Display *display;
-
-signals:
-    void test();
 };
 
 #endif // CONTEXT_H

@@ -164,7 +164,8 @@ QString Context::launcherFix(QString exec)
 {
     QStringList list;
     list << "google-chrome-stable" << "google-chrome";
-    //list << "other" << "other";
+    //list << "thunar" << "Thunar";
+    //list << "TelegramDesktop" << "Telegram";
 
     for(int i = 1; i <= list.length(); i++)
     {
@@ -197,6 +198,12 @@ int Context::exec(QString pro)
     return process->pid();
 }
 
+void Context::addDesktopFile(int pid, QString desktopFile)
+{
+    if (!desktopFile.isEmpty()) {
+        this->xaddDesktopFile(pid, desktopFile.remove("file://"));
+    }
+}
 
 QStringList Context::addLauncher(QString app)
 {
@@ -204,7 +211,9 @@ QStringList Context::addLauncher(QString app)
     app = app.replace("file://", "");
     QFileInfo f(app);
 
-    QString nome, icone, tmp, exec, wmclass;
+    QString nome, icone, tmp, exec, wmclass, iconDefault;
+    QString themeName = "xatane-icons";
+    iconDefault = "/usr/share/icons/" + themeName + "/apps/scalable/default-application.svg";
 
     if (f.suffix() == "desktop")
     {
@@ -251,13 +260,35 @@ QStringList Context::addLauncher(QString app)
 
                 foreach (QString ext, exts) {
 
-                    icone = path + "/xatane-icons" + "/apps/scalable/" + tmp + ext;
+                    icone = path + "/" + themeName + "/apps/scalable/" + tmp + ext;
                     f.setFile(icone);
 
                     if (f.exists()) {
                         stop = true;
                         break;
                     }
+
+                    if(!stop) icone = "";
+                }
+
+                if (icone.isEmpty()) {
+
+                    foreach (QString ext, exts) {
+
+                        icone = "/usr/share/pixmaps/" + tmp + ext;
+                        f.setFile(icone);
+
+                        if (f.exists()) {
+                            stop = true;
+                            break;
+                        }
+
+                        if(!stop) icone = "";
+                    }
+                }
+
+                if (icone.isEmpty()) {
+                    icone = iconDefault;
                 }
 
                 if (stop) break;
@@ -267,6 +298,8 @@ QStringList Context::addLauncher(QString app)
         }
         else
         {
+            if (tmp.contains(".ico")) tmp = iconDefault;
+
             list << nome << "file://" + tmp << exec << wmclass;
         }
     }
@@ -324,7 +357,7 @@ int Context::isMinimized(QString wmclass)
         {
             if (wmclass == QString(this->xwindowClass(lists[i])))
             {
-                if (this->xwindowState(lists[i]) != 0x0)
+                if ((const char *)this->xwindowState(lists[i]) == "_NET_WM_STATE_HIDDEN")
                 {
                     return 1;
                 }
@@ -389,6 +422,11 @@ void Context::active(int pid)
     }
 }
 
+int Context::isActive(QString pidname)
+{
+    return this->xisActive(pidname);
+}
+
 int Context::mouseX()
 {
     QPoint Mouse = QCursor::pos(this->screen);
@@ -399,4 +437,49 @@ int Context::mouseY()
 {
     QPoint Mouse = QCursor::pos(this->screen);
     return Mouse.y();
+}
+
+QStringList Context::applications()
+{
+    QStringList list, tmp;
+
+    QDir dir("/usr/share/applications/");
+
+    QFileInfoList filelist = dir.entryInfoList(QDir::Files);
+
+    for (int i = 0; i < filelist.length(); i++)
+    {
+        tmp  = this->addLauncher(filelist.at(i).filePath());
+        list << tmp.at(0) + ";" + tmp.at(1) + ";" + tmp.at(2) + ";" + filelist.at(i).filePath();
+    }
+
+    return list;
+}
+
+void Context::dragDrop(QString icone, QString app)
+{
+
+    QMimeData *mimeData = new QMimeData;
+    QList<QUrl> url;
+
+    url.append(QUrl(app));
+    mimeData->setUrls(url);
+
+    QImage img(icone, icone.split(".").at(1).toUtf8());
+    QImage image = img.scaled(48, 48, Qt::KeepAspectRatio);
+
+    QPixmap pixel;
+    pixel.convertFromImage(image);
+
+    QDrag *drag = new QDrag(this);
+    drag->setMimeData(mimeData);
+    drag->setPixmap(pixel);
+
+    QPoint p;
+    p.setX(pixel.width() / 2);
+    p.setY(pixel.height() / 2);
+    drag->setHotSpot(p);
+
+    //drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction);
+    drag->exec(drag->defaultAction());
 }

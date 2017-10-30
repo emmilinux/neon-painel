@@ -8,13 +8,12 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QThread>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
-#include <string>
-#include <string.h>
-#include <assert.h>
+#include "unistd.h"
 
 
 class Xlibutil
@@ -40,8 +39,11 @@ public:
     void xchange(Window window, const char * atom);
     void xreservedSpace(Window window, int h);
     unsigned char* windowProperty(Display *display, Window window, const char *arg, unsigned long *nitems, int *status);
+    QString xwindowLauncher(Window window);
+    void xaddDesktopFile(int pid, QString arg);
 
 private:
+    QThread t;
     XWindowAttributes attrWindow(Display *display, Window window);
 };
 

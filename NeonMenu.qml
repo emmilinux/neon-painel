@@ -7,22 +7,61 @@ ApplicationWindow {
     visible: false
     x: 0
     y: 0
-    width: 500
-    height: 480
+    width: 530
+    height: 530
     title: qsTr("Neon Menu")
     color: "transparent"
-    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+    flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+
+    property var menuElements: []
+    property var textSearch: textSearch
+
+
+    function addApps() {
+
+        var x = 0
+        var y = 0
+
+        for (var i = 0; i < menuElements.length; i++) {
+
+            menuElements[i].x = x
+            menuElements[i].y = y
+
+            x += 74
+
+            if (x + 74 >= neonMenu.width) {
+                x = 0
+                y += 78
+            }
+
+            menuElements[i].visible = true
+        }
+
+        launchersApps.height = y;
+    }
+
 
     onActiveChanged: {
         if (!active) {
             //neonMenu.close()
             neonMenu.visible = false;
             main.clickOpc = main.startOpc
+            textSearch.focus = false
+            addApps()
+        }
+    }
+
+    MouseArea {
+        id: mouseMenu
+        anchors.fill: parent
+
+        onClicked: {
+            textSearch.focus = false
         }
     }
 
     Rectangle {
-        id: rectangle1
+        id: menuTop
         anchors.fill: parent
         opacity: opc
         color: cor
@@ -31,8 +70,9 @@ ApplicationWindow {
 
     Rectangle {
         id: resize
-        width: 15
-        height: 15
+        x: 470
+        width: 18
+        height: 18
         color: "#ffffff"
         opacity: 0.0
         anchors.top: parent.top
@@ -46,6 +86,7 @@ ApplicationWindow {
 
             property int startX: 0
             property int startY: 0
+            property bool btnUp: true
 
             /*
             onReleased: {
@@ -55,9 +96,18 @@ ApplicationWindow {
             }
             */
 
-            onPressed: {
-                startX = mouseX - 15
-                startY = mouseY
+            onPressedChanged: {
+                if (btnUp) {
+
+                    btnUp = false
+                    startX = mouseX - 18
+                    startY = mouseY
+
+                } else {
+
+                    btnUp = true
+                    addApps()
+                }
             }
 
             onMouseXChanged: {
@@ -125,6 +175,86 @@ ApplicationWindow {
         opacity: 0.3
         anchors.right: parent.right
         anchors.leftMargin: 0
+
+        Rectangle {
+            id: search
+            color: "#ffffff"
+            anchors.right: parent.right
+            anchors.rightMargin: 15
+            anchors.left: parent.left
+            anchors.leftMargin: 15
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 12
+            anchors.top: parent.top
+            anchors.topMargin: 12
+            opacity: 0.1
+        }
+    }
+
+    TextInput {
+        id: textSearch
+        x: 0
+        y: 410
+        height: 30
+        color: "#ffffff"
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 12
+        text: "Buscar..."
+        antialiasing: true
+        //cursorVisible: true
+        font.bold: false
+        font.pointSize: 12
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignLeft
+        selectionColor: "#007fff"
+        selectByMouse: true
+        wrapMode: TextEdit.Wrap
+
+        property bool ativo: true
+
+        onFocusChanged: {
+
+            if (ativo)  {
+                ativo = false
+                text = ""
+            } else {
+                ativo = true
+                text = "Buscar..."
+            }
+        }
+
+        Keys.onReleased: {
+
+            var x = 0
+            var y = 0
+
+            for (var i = 0; i < menuElements.length; i++) {
+
+                if(menuElements[i].nome.toLowerCase().search(text) !== -1) {
+
+                    menuElements[i].x = x
+                    menuElements[i].y = y
+
+                    x += 74
+
+                    if (x + 74 >= neonMenu.width) {
+                        x = 0
+                        y += 78
+                    }
+
+                    menuElements[i].visible = true
+
+                } else {
+                    menuElements[i].visible = false
+                }
+            }
+
+            launchersApps.height = y;
+        }
     }
 
     Text {
@@ -158,7 +288,7 @@ ApplicationWindow {
         frameVisible: false
 
         Item {
-            id: item1
+            id: launchersApps
             height: 338
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -168,5 +298,71 @@ ApplicationWindow {
             anchors.topMargin: 0
         }
 
+    }
+
+    Rectangle {
+        id: rectangle3
+        x: 450
+        y: 30
+        width: 18
+        height: 14
+        color: "transparent"
+        anchors.top: parent.top
+        anchors.topMargin: 32
+        anchors.right: parent.right
+        anchors.rightMargin: 34
+
+        Rectangle {
+            id: rectangle4
+            width: 18
+            height: 2
+            color: "#ffffff"
+        }
+
+        Rectangle {
+            id: rectangle5
+            x: 0
+            y: 6
+            width: 18
+            height: 2
+            color: "#ffffff"
+        }
+
+        Rectangle {
+            id: rectangle6
+            x: 0
+            y: 12
+            width: 18
+            height: 2
+            color: "#ffffff"
+        }
+    }
+
+    Component.onCompleted: {
+
+        var apps = Context.applications()
+        var comp = Qt.createComponent("app.qml")
+        var x = 0
+        var y = 0
+
+        for (var i = 0; i < apps.length; i ++) {
+
+            var app = apps[i].split(';')
+
+            if (app[1] !== "") {
+
+                var obj = comp.createObject(launchersApps, {'x': x, 'y': y, 'nome': app[0], 'icone': app[1], 'exec': app[2], 'launcherApp': 'file://' + app[3]})
+                menuElements.push(obj)
+
+                x += 74
+
+                if (x + 74 >= neonMenu.width) {
+                    x = 0
+                    y += 78
+                }
+            }
+        }
+
+        launchersApps.height = y;
     }
 }

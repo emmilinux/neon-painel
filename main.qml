@@ -6,18 +6,18 @@ import "utils.js" as Utils
 
 ApplicationWindow {
     id: main
-    visible: true
+    visible: false
     x: 0
     y: 0
     width: 1000
     height: 40
     title: qsTr("Neon Painel")
     color: "transparent"
-    property alias clockFontbold: clock.font.bold
-    flags: Qt.DockWidgetArea_Mask | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.NoFocus
+    flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowDoesNotAcceptFocus
 
     property var neonMenu: Object
-    property string cor: "#333333" //"#00ff00" //"#ff0000" //"#7310A2" //"#ff9900"
+    // yellow #FFFB00, purple "#7310A2", crimson #dc143c, black "#333333", blue "#007fff", red #FF0D00, orange #ff9900, green
+    property string cor: "#7310A2"
     property double opc: 0.75
     property double clickOpc: 0.0
     property double startOpc: 0.0
@@ -27,11 +27,118 @@ ApplicationWindow {
     property var launcher: []
     property int appId: 0
 
+    property int subLauncherX: 0
+    property var subLauncher: []
+    property bool subLauncherStarted: true
+    property bool windowVerify: false
+    property int subWindowPid: 0
+    property string subWindowLauncher: ""
+
+    signal desktopWindow(string desktopFile, string wmclass)
+
+    function clearWindow() {
+
+        if (windowVerify) {
+
+            for (var i = 0; i < subLauncher.length; i++) {
+                subLauncher[i].destroy()
+            }
+
+            subLauncher = []
+            subLauncherStarted = true
+            separatorBar.visible = false
+            windowVerify = false
+
+            if (launcher.length > 0) {
+                subLauncherX = 10
+            } else {
+                subLauncherX = 0
+            }
+        }
+    }
+
+    onDesktopWindow: {
+
+        clearWindow()
+
+        var list = Context.addLauncher(desktopFile)
+        var fixicede = false
+        list[3] = wmclass
+
+        for(var i = 0; i < launcher.length; i++) {
+            if (launcher[i].pidname === list[3]) fixicede = true
+        }
+
+        if (list[0] !== "" && !fixicede) {
+
+            if (subLauncherStarted) {
+
+                if (launcher.length > 0) {
+                    subLauncherX = 10
+                } else {
+                    subLauncherX = 0
+                }
+
+                subLauncherStarted = false
+            }
+
+            var compon = Qt.createComponent("launchers/Application.qml")
+            var obj = compon.createObject(subAppbar, {'x': subLauncherX, 'y': 0, 'url': list[1], 'nome': list[0], 'exec': list[2], 'pidname': list[3], '_instance': true})
+
+            subLauncherX += 50
+            subLauncher.push(obj)
+            subAppbar.width += 50
+            obj.destak.visible = true
+            if (launcher.length > 0) separatorBar.visible = true
+        }
+    }
+
+    DropArea {
+        id: drop
+        anchors.fill: parent
+        enabled: true
+
+        onEntered: {
+            //console.log("entered")
+        }
+
+        onExited: {
+            //console.log("exited")
+        }
+
+        onDropped: {
+
+            var files = drop.urls.toString().split(',');
+
+            for (var i = 0; i <  files.length; i++) {
+                //console.log("item", files[i])
+                var list = Context.addLauncher(files[i])
+
+                if (list[0] !== "") {
+
+                    var component = Qt.createComponent("launchers/Application.qml")
+                    var obj = component.createObject(applicationBar, {'x': launcherX, 'y': 0, 'url': list[1], 'nome': list[0], 'exec': list[2], 'pidname': list[3]})
+
+                    launcherX += 50
+                    launcher.push(obj)
+                    applicationBar.width += 50
+                    subAppbar.x = applicationBar.x + applicationBar.width
+                }
+
+            }
+
+            drop.acceptProposedAction()
+        }
+
+    }
+
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            neonMenu.visible = false
             clickOpc = startOpc
+            neonMenu.visible = false
+            neonMenu.textSearch.focus = false
+            neonMenu.addApps()
         }
     }
 
@@ -54,10 +161,11 @@ ApplicationWindow {
         Rectangle {
             id: bottomBar
             x: 0
-            y: parent.height - 2
-            height: 2
+            y: parent.height - 1.5
+            height: 1.5
             width: parent.width
             color: "#000000"
+            opacity: 0.7
         }
 
         Rectangle {
@@ -99,6 +207,8 @@ ApplicationWindow {
                     } else {
                         clickOpc = startOpc
                         neonMenu.visible = false
+                        neonMenu.textSearch.focus = false
+                        neonMenu.addApps()
                     }
 
                 }
@@ -239,49 +349,30 @@ ApplicationWindow {
         }
 
         Item {
-            id: item1
+            id: applicationBar
             x: 52
             y: 0
             z: 9
-            width: 800
-            height: 40
+            width: 0
+            height: 40    
+        }
 
-            DropArea {
-                id: drop
-                anchors.fill: parent
-                enabled: true
+        Item {
+           id: subAppbar
+           x: applicationBar.x + applicationBar.width
+           width: 3
+           height: 40
 
-                onEntered: {
-                    //console.log("entered")
-                }
-
-                onExited: {
-                    //console.log("exited")
-                }
-
-                onDropped: {
-
-                    var files = drop.urls.toString().split(',');
-
-                    for (var i = 0; i <  files.length; i++) {
-                        //console.log("item", files[i])
-                        var list = Context.addLauncher(files[i])
-
-                        if (list[0] !== "") {
-
-                            var component = Qt.createComponent("launchers/Application.qml")
-                            var obj = component.createObject(parent, {'x': launcherX, 'y': 0, 'url': list[1], 'nome': list[0], 'exec': list[2], 'pidname': list[3]})
-
-                            launcherX += 50
-                            launcher.push(obj)
-                        }
-
-                    }
-
-                    drop.acceptProposedAction()
-                }
-
-            }
+           Rectangle {
+              id: separatorBar
+              x: 0
+              y: 5
+              width: 1
+              height: 30
+              color: "#ffffff"
+              opacity: 0.3
+              visible: false
+           }
         }
 
         Rectangle {
@@ -309,10 +400,11 @@ ApplicationWindow {
                 color: "#ffffff"
 
                 Timer {
-                    interval: 100; running: true; repeat: true;
+                    interval: 100
+                    running: true
+                    repeat: true
                     onTriggered: clock.text = Utils.getTime()
                }
-
             }
         }
     }
@@ -320,6 +412,6 @@ ApplicationWindow {
     Component.onCompleted: {
         main.menuShow()
         Context.changeThemeColor(main.cor)
+        main.visible = true
     }
-
 }

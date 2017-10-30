@@ -16,7 +16,6 @@
 #include <QVariant>
 
 
-
 class Threads : public QThread
 {
 
@@ -29,7 +28,7 @@ public:
 signals:
     void onCreate();
     void onDestroy();
-
+    void onDesktopWindow(QString args, QString wmclass);
 };
 
 #endif // THREADS_H
