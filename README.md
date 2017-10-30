@@ -1,4 +1,4 @@
-# neon-painel
+# neon-painel + Neon Menu
 Um painel moderno e clean
 
 # QT Version

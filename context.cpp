@@ -4,9 +4,9 @@
 
 void Context::changeColorBtnMin(QRgb color)
 {
-    QImage img("/home/shenoisz/.themes/dinamic-color/xfwm4/bk/hide-active.xpm", "xpm");
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/bk/hide-active.xpm", "xpm");
     img.setColor(0, color);
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/hide-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-active.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
@@ -28,15 +28,15 @@ void Context::changeColorBtnMin(QRgb color)
 
     img.setColor(0, qRgb(r, g, b));
 
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/hide-prelight.xpm", "xpm");
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/hide-pressed.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-prelight.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-pressed.xpm", "xpm");
 }
 
 void Context::changeColorBtnMax(QRgb color)
 {
-    QImage img("/home/shenoisz/.themes/dinamic-color/xfwm4/bk/maximize-active.xpm", "xpm");
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/bk/maximize-active.xpm", "xpm");
     img.setColor(0, color);
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/maximize-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-active.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
@@ -58,16 +58,16 @@ void Context::changeColorBtnMax(QRgb color)
 
     img.setColor(0, qRgb(r, g, b));
 
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/maximize-prelight.xpm", "xpm");
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/maximize-pressed.xpm", "xpm");
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/maximize-toggled-prelight.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-prelight.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-pressed.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-toggled-prelight.xpm", "xpm");
 }
 
 void Context::changeColorBtnClose(QRgb color)
 {
-    QImage img("/home/shenoisz/.themes/dinamic-color/xfwm4/bk/close-active.xpm", "xpm");
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/bk/close-active.xpm", "xpm");
     img.setColor(0, color);
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/close-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-active.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
@@ -89,8 +89,8 @@ void Context::changeColorBtnClose(QRgb color)
 
     img.setColor(0, qRgb(r, g, b));
 
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/close-prelight.xpm", "xpm");
-    img.save("/home/shenoisz/.themes/dinamic-color/xfwm4/close-pressed.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-prelight.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-pressed.xpm", "xpm");
 }
 
 void Context::changeColor(int w, int h, QRgb color, QString s)
@@ -111,35 +111,35 @@ void Context::changeThemeColor(QString rgb)
     QColor cor(rgb);
     QRgb color = qRgb(cor.red(), cor.green(), cor.blue());
 
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-1-active.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-2-active.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-3-active.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-4-active.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-5-active.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-1-active.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-2-active.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-3-active.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-4-active.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-5-active.xpm");
 
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-1-inactive.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-2-inactive.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-3-inactive.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-4-inactive.xpm");
-    this->changeColor(20, 24, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/title-5-inactive.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-1-inactive.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-2-inactive.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-3-inactive.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-4-inactive.xpm");
+    this->changeColor(20, 24, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/title-5-inactive.xpm");
 
-    this->changeColor(2, 25, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/top-left-active.xpm");
-    this->changeColor(2, 25, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/top-left-inactive.xpm");
-    this->changeColor(2, 25, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/top-right-active.xpm");
-    this->changeColor(2, 25, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/top-right-inactive.xpm");
+    this->changeColor(2, 25, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/top-left-active.xpm");
+    this->changeColor(2, 25, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/top-left-inactive.xpm");
+    this->changeColor(2, 25, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/top-right-active.xpm");
+    this->changeColor(2, 25, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/top-right-inactive.xpm");
 
-    this->changeColor(4, 16, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/left-active.xpm");
-    this->changeColor(4, 16, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/left-inactive.xpm");
-    this->changeColor(4, 16, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/right-active.xpm");
-    this->changeColor(4, 16, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/right-inactive.xpm");
+    this->changeColor(4, 16, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/left-active.xpm");
+    this->changeColor(4, 16, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/left-inactive.xpm");
+    this->changeColor(4, 16, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/right-active.xpm");
+    this->changeColor(4, 16, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/right-inactive.xpm");
 
-    this->changeColor(3, 4, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/bottom-active.xpm");
-    this->changeColor(3, 4, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/bottom-inactive.xpm");
+    this->changeColor(3, 4, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/bottom-active.xpm");
+    this->changeColor(3, 4, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/bottom-inactive.xpm");
 
-    this->changeColor(2, 2, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/bottom-right-inactive.xpm");
-    this->changeColor(2, 2, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/bottom-right-active.xpm");
-    this->changeColor(2, 2, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/bottom-left-inactive.xpm");
-    this->changeColor(2, 2, color, "/home/shenoisz/.themes/dinamic-color/xfwm4/bottom-left-active.xpm");
+    this->changeColor(2, 2, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/bottom-right-inactive.xpm");
+    this->changeColor(2, 2, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/bottom-right-active.xpm");
+    this->changeColor(2, 2, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/bottom-left-inactive.xpm");
+    this->changeColor(2, 2, color, QDir::homePath() + "/.themes/dinamic-color/xfwm4/bottom-left-active.xpm");
 
     this->changeColorBtnClose(color);
     this->changeColorBtnMax(color);
@@ -151,13 +151,16 @@ void Context::changeThemeColor(QString rgb)
     QString theme = process.readLine().replace("\n", "");
     process.close();
 
-    process.start("xfconf-query -c xfwm4 -p /general/theme -s tmp");
-    process.waitForFinished();
-    process.close();
+    if (theme == "dinamic-color")
+    {
+        process.start("xfconf-query -c xfwm4 -p /general/theme -s tmp");
+        process.waitForFinished();
+        process.close();
 
-    process.start("xfconf-query -c xfwm4 -p /general/theme -s \"" + theme + "\"");
-    process.waitForFinished();
-    process.close();
+        process.start("xfconf-query -c xfwm4 -p /general/theme -s dinamic-color");
+        process.waitForFinished();
+        process.close();
+    }
 }
 
 QString Context::launcherFix(QString exec)
@@ -212,7 +215,14 @@ QStringList Context::addLauncher(QString app)
     QFileInfo f(app);
 
     QString nome, icone, tmp, exec, wmclass, iconDefault;
-    QString themeName = "xatane-icons";
+
+    QProcess process;
+    process.start("xfconf-query -c xsettings -p /Net/IconThemeName");
+    process.waitForFinished();
+    QString themeName = process.readLine().replace("\n", "");
+    process.close();
+    //QString themeName = "xatane-icons";
+
     iconDefault = "/usr/share/icons/" + themeName + "/apps/scalable/default-application.svg";
 
     if (f.suffix() == "desktop")
