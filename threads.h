@@ -28,7 +28,7 @@ public:
 signals:
     void onCreate();
     void onDestroy();
-    void onDesktopWindow(QString args, QString wmclass);
+    void onDesktopWindow(int isLauncher, QString attrs, QString args, QString wmclass);
 };
 
 #endif // THREADS_H

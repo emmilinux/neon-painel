@@ -16,7 +16,7 @@ ApplicationWindow {
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowDoesNotAcceptFocus
 
     property var neonMenu: Object
-    // yellow #FFFB00, purple "#7310A2", crimson #dc143c, black "#333333", blue "#007fff", red #FF0D00, orange #ff9900, green
+    // yellow #FFFB00, purple "#7310A2", crimson #dc143c, black "#333333", blue "#007fff", red #FF0D00, orange #ff9900, green #00ff00
     property string cor: "#7310A2"
     property double opc: 0.75
     property double clickOpc: 0.0
@@ -34,7 +34,7 @@ ApplicationWindow {
     property int subWindowPid: 0
     property string subWindowLauncher: ""
 
-    signal desktopWindow(string desktopFile, string wmclass)
+    signal desktopWindow(int isLaucher, string nitems, string desktopFile, string wmclass)
 
     function clearWindow() {
 
@@ -61,7 +61,14 @@ ApplicationWindow {
 
         clearWindow()
 
-        var list = Context.addLauncher(desktopFile)
+        var list = []
+
+        if (isLaucher) {
+            list = Context.addLauncher(desktopFile)
+        } else {
+            list = nitems.split(';')
+        }
+
         var fixicede = false
         list[3] = wmclass
 
@@ -157,7 +164,7 @@ ApplicationWindow {
     Rectangle {
         anchors.fill: parent
         color: "transparent"
-
+/*
         Rectangle {
             id: bottomBar
             x: 0
@@ -167,7 +174,7 @@ ApplicationWindow {
             color: "#000000"
             opacity: 0.7
         }
-
+*/
         Rectangle {
             id: btnMenuSub
             x: 2

@@ -4,9 +4,10 @@
 
 void Context::changeColorBtnMin(QRgb color)
 {
-    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/bk/hide-active.xpm", "xpm");
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Min.xpm", "xpm");
     img.setColor(0, color);
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-inactive.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
@@ -34,9 +35,10 @@ void Context::changeColorBtnMin(QRgb color)
 
 void Context::changeColorBtnMax(QRgb color)
 {
-    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/bk/maximize-active.xpm", "xpm");
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Max.xpm", "xpm");
     img.setColor(0, color);
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-inactive.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
@@ -61,13 +63,15 @@ void Context::changeColorBtnMax(QRgb color)
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-prelight.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-pressed.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-toggled-prelight.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-toggled-pressed.xpm", "xpm");
 }
 
 void Context::changeColorBtnClose(QRgb color)
 {
-    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/bk/close-active.xpm", "xpm");
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Close.xpm", "xpm");
     img.setColor(0, color);
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-inactive.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
@@ -220,6 +224,7 @@ QStringList Context::addLauncher(QString app)
     process.start("xfconf-query -c xsettings -p /Net/IconThemeName");
     process.waitForFinished();
     QString themeName = process.readLine().replace("\n", "");
+
     process.close();
     //QString themeName = "xatane-icons";
 
@@ -451,16 +456,20 @@ int Context::mouseY()
 
 QStringList Context::applications()
 {
-    QStringList list, tmp;
+    QStringList list, tmp, appsPath;
 
-    QDir dir("/usr/share/applications/");
+    appsPath << "/usr/share/applications/" << QDir::homePath() + "/.local/share/applications/";
 
-    QFileInfoList filelist = dir.entryInfoList(QDir::Files);
+    foreach (QString path, appsPath) {
 
-    for (int i = 0; i < filelist.length(); i++)
-    {
-        tmp  = this->addLauncher(filelist.at(i).filePath());
-        list << tmp.at(0) + ";" + tmp.at(1) + ";" + tmp.at(2) + ";" + filelist.at(i).filePath();
+        QDir dir(path);
+        QFileInfoList filelist = dir.entryInfoList(QDir::Files);
+
+        for (int i = 0; i < filelist.length(); i++)
+        {
+            tmp = this->addLauncher(filelist.at(i).filePath());
+            list << tmp.at(0) + ";" + tmp.at(1) + ";" + tmp.at(2) + ";" + filelist.at(i).filePath();
+        }
     }
 
     return list;

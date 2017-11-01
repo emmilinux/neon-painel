@@ -15,17 +15,15 @@ void Threads::run()
             XEvent e;
             XNextEvent(display, &e);
             QStringList launchers;
-            Threads *t[99];
-            Threads *m[99];
-            Threads *n[99];
+            Threads *t[99], *m[99], *n[99], *d[99];
 
             //e.type == CreateNotify
             //qDebug() << "create Window - " << ctx.windowName(e.xmap.window);
 
             if (e.type == CreateNotify || e.type == DestroyNotify)
             {
-                //QThread::msleep(100);
-                usleep(300000);
+                QThread::msleep(300);
+                //usleep(300000);
 
                 QList<QVariant> list = this->main->property("launcher").toList();
 
@@ -73,8 +71,8 @@ void Threads::run()
                                 //qDebug() << "launcher" << launcher;
                                 launchers << launcher;
                                 m[i] = new Threads;
-                                this->main->connect(m[i], SIGNAL(onDesktopWindow(QString, QString)), this->main, SIGNAL(desktopWindow(QString, QString)));
-                                m[i]->onDesktopWindow(launcher, ctx.xwindowClass(client_list[i]));
+                                this->main->connect(m[i], SIGNAL(onDesktopWindow(int, QString, QString, QString)), this->main, SIGNAL(desktopWindow(int, QString, QString, QString)));
+                                m[i]->onDesktopWindow(1, "", launcher, ctx.xwindowClass(client_list[i]));
                             }
                         }
                         else
@@ -89,8 +87,8 @@ void Threads::run()
                                 {
                                     launchers << desktopFile;
                                     n[i] = new Threads;
-                                    this->main->connect(n[i], SIGNAL(onDesktopWindow(QString, QString)), this->main, SIGNAL(desktopWindow(QString, QString)));
-                                    n[i]->onDesktopWindow(desktopFile, ctx.xwindowClass(win));
+                                    this->main->connect(n[i], SIGNAL(onDesktopWindow(int, QString, QString, QString)), this->main, SIGNAL(desktopWindow(int, QString, QString, QString)));
+                                    n[i]->onDesktopWindow(1, "", desktopFile, ctx.xwindowClass(win));
 
                                     Display *display = QX11Info::display();
                                     unsigned char* deskfile = (unsigned char*)desktopFile.toUtf8().constData();
@@ -102,6 +100,18 @@ void Threads::run()
                                         Atom atom = XInternAtom(display, "_BAMF_DESKTOP_FILE", False);
                                         status = XChangeProperty(display, client_list[i], atom, XA_STRING, 8, PropModeReplace, deskfile, desktopFile.length());
                                     }
+                                }
+                            }
+                            else
+                            {
+                                if (QString(ctx.xwindowType(client_list[i])) == "_NET_WM_WINDOW_TYPE_NORMAL")
+                                {
+                                    d[i] = new Threads;
+                                    this->main->connect(d[i], SIGNAL(onDesktopWindow(int, QString, QString, QString)), this->main, SIGNAL(desktopWindow(int, QString, QString, QString)));
+                                    // nome - url - exec - pidname
+                                    QString attrs;
+                                    attrs = QString(ctx.xwindowName(client_list[i])) + ";file:///usr/share/icons/xatane-icons/apps/scalable/default-application.svg;;";
+                                    d[i]->onDesktopWindow(0, attrs, "", ctx.xwindowClass(client_list[i]));
                                 }
                             }
                         }
