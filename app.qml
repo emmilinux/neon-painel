@@ -36,7 +36,10 @@ Rectangle {
                 pid = Context.exec(exec)
                 main.subWindowPid = pid
                 main.subWindowLauncher = launcherApp.replace("file://", "")
-                //Context.addDesktopFile(pid, launcherApp)
+
+                neonMenu.visible = false
+                neonMenu.textSearch.focus = false
+                main.clickOpc = main.startOpc
             }
 
             onPressedChanged: {
