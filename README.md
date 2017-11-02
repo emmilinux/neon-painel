@@ -14,4 +14,5 @@ sudo apt-get install qt5-default
 sudo apt-get install libqt5x11extras5-dev
 sudo apt-get install qml-module-qtquick2
 sudo apt-get install QtQuick.Controls
+sudo apt-get install qml-module-qtgraphicaleffects
 ```
