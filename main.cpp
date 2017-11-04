@@ -2,7 +2,7 @@
 
 #include "threads.h"
 #include "context.h"
-
+#include "qquickimage.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,10 +10,15 @@ int main(int argc, char *argv[])
 
     QDesktopWidget desktop;
     Context ctx;
+
+    QQuickImage image;
+    image.ctx = &ctx;
+
     Threads *threads = new Threads();
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Context", &ctx);
+    engine.addImageProvider("pixmap", &image);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QObject *main = engine.rootObjects().first();

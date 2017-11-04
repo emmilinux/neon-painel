@@ -9,11 +9,11 @@
 #include <QObject>
 #include <QDebug>
 #include <QX11Info>
-
-#include "context.h"
-#include <QObject>
+#include <QQuickImageProvider>
 #include <QList>
 #include <QVariant>
+
+#include "context.h"
 
 
 class Threads : public QThread
@@ -28,7 +28,7 @@ public:
 signals:
     void onCreate();
     void onDestroy();
-    void onDesktopWindow(int isLauncher, QString attrs, QString args, QString wmclass);
+    void onDesktopWindow(QString nome, QString wmclass, int winId);
 };
 
 #endif // THREADS_H

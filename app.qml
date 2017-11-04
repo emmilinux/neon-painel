@@ -3,7 +3,6 @@ import QtQuick.Controls 1.2
 
 Rectangle {
     id: rectangle
-
     x: 0
     y: 0
     width: 74
@@ -14,11 +13,10 @@ Rectangle {
     property string nome: ""
     property string exec: ""
     property string launcherApp: ""
-    property int pid: 0
 
     Rectangle {
         anchors.fill: parent
-        color: "#ffffff"
+        color: "#7310A2"//"#ffffff"
         opacity: 0.0
 
         MouseArea {
@@ -33,9 +31,8 @@ Rectangle {
             property int mouseStart: 0
 
             onClicked: { 
-                pid = Context.exec(exec)
-                main.subWindowPid = pid
-                main.subWindowLauncher = launcherApp.replace("file://", "")
+
+                Context.exec(exec)
 
                 neonMenu.visible = false
                 neonMenu.textSearch.focus = false
@@ -52,6 +49,7 @@ Rectangle {
                     _pressed2 = false
                     mouseStart = mouseX
                     parent.opacity = 0.0
+                    main.clickOpc = main.startOpc
                     neonMenu.visible = false
                     neonMenu.textSearch.focus = false
                     neonMenu.addApps()
@@ -74,7 +72,7 @@ Rectangle {
             hoverEnabled: true
 
             onHoveredChanged: {
-                parent.opacity = 0.30
+                parent.opacity = 0.5
             }
 
             onExited: {
@@ -100,22 +98,6 @@ Rectangle {
         width: 48
         height: 48
         source: icone
-
-        /*
-        Drag.active: mouseArea.drag.active
-        Drag.hotSpot.x: 0
-        Drag.hotSpot.y: 0
-        Drag.mimeData: { "text/uri-list": "file://" + launcherApp }
-        Drag.supportedActions: Qt.CopyAction
-        Drag.dragType: Drag.Automatic
-
-        Drag.onDragStarted: {
-
-        }
-        Drag.onDragFinished: {
-            console.log("Time to copy")
-        }
-        */
    }
 
    Text {

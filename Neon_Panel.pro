@@ -7,7 +7,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     context.cpp \
     xlibutil.cpp \
-    threads.cpp
+    threads.cpp \
+    qquickimage.cpp
 
 RESOURCES += qml.qrc
 
@@ -38,4 +39,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     context.h \
     xlibutil.h \
-    threads.h
+    threads.h \
+    qquickimage.h

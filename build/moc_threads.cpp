@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Threads_t {
-    QByteArrayData data[9];
-    char stringdata[74];
+    QByteArrayData data[8];
+    char stringdata[63];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,13 +34,12 @@ QT_MOC_LITERAL(1, 8, 8),
 QT_MOC_LITERAL(2, 17, 0),
 QT_MOC_LITERAL(3, 18, 9),
 QT_MOC_LITERAL(4, 28, 15),
-QT_MOC_LITERAL(5, 44, 10),
-QT_MOC_LITERAL(6, 55, 5),
-QT_MOC_LITERAL(7, 61, 4),
-QT_MOC_LITERAL(8, 66, 7)
+QT_MOC_LITERAL(5, 44, 4),
+QT_MOC_LITERAL(6, 49, 7),
+QT_MOC_LITERAL(7, 57, 5)
     },
     "Threads\0onCreate\0\0onDestroy\0onDesktopWindow\0"
-    "isLauncher\0attrs\0args\0wmclass"
+    "nome\0wmclass\0winId"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,12 +59,12 @@ static const uint qt_meta_data_Threads[] = {
  // signals: name, argc, parameters, tag, flags
        1,    0,   29,    2, 0x06 /* Public */,
        3,    0,   30,    2, 0x06 /* Public */,
-       4,    4,   31,    2, 0x06 /* Public */,
+       4,    3,   31,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString,    5,    6,    7,    8,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    5,    6,    7,
 
        0        // eod
 };
@@ -77,7 +76,7 @@ void Threads::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         switch (_id) {
         case 0: _t->onCreate(); break;
         case 1: _t->onDestroy(); break;
-        case 2: _t->onDesktopWindow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4]))); break;
+        case 2: _t->onDesktopWindow((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -96,7 +95,7 @@ void Threads::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             }
         }
         {
-            typedef void (Threads::*_t)(int , QString , QString , QString );
+            typedef void (Threads::*_t)(QString , QString , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Threads::onDesktopWindow)) {
                 *result = 2;
             }
@@ -153,9 +152,9 @@ void Threads::onDestroy()
 }
 
 // SIGNAL 2
-void Threads::onDesktopWindow(int _t1, QString _t2, QString _t3, QString _t4)
+void Threads::onDesktopWindow(QString _t1, QString _t2, int _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE

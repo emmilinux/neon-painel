@@ -9,11 +9,12 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QThread>
+#include <QPixmap>
+#include <QImage>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
-#include "unistd.h"
 
 
 class Xlibutil
@@ -41,6 +42,7 @@ public:
     unsigned char* windowProperty(Display *display, Window window, const char *arg, unsigned long *nitems, int *status);
     QString xwindowLauncher(Window window);
     void xaddDesktopFile(int pid, QString arg);
+    QPixmap xwindowIcon(Window window);
 
 private:
     QThread t;

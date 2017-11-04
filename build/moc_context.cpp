@@ -102,7 +102,7 @@ static const uint qt_meta_data_Context[] = {
     QMetaType::QStringList, QMetaType::QString,    3,
     QMetaType::Int,
     QMetaType::Int,
-    QMetaType::Int, QMetaType::QString,    7,
+    QMetaType::Void, QMetaType::QString,    7,
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void, QMetaType::Int,   11,
     QMetaType::Void, QMetaType::QString,   13,
@@ -130,8 +130,7 @@ void Context::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         case 2: { int _r = _t->mouseY();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 3: { int _r = _t->exec((*reinterpret_cast< QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 3: _t->exec((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 4: _t->minimize((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 5: _t->active((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 6: _t->manyMinimizes((*reinterpret_cast< QString(*)>(_a[1]))); break;

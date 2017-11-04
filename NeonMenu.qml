@@ -44,7 +44,7 @@ ApplicationWindow {
     onActiveChanged: {
         if (!active) {
             //neonMenu.close()
-            neonMenu.visible = false;
+            neonMenu.visible = false
             main.clickOpc = main.startOpc
             textSearch.focus = false
             addApps()
@@ -63,8 +63,8 @@ ApplicationWindow {
     Rectangle {
         id: menuTop
         anchors.fill: parent
-        opacity: opc
-        color: cor
+        opacity: main.opc
+        color: main.cor
         //"#7310A2"
     }
 
@@ -234,7 +234,7 @@ ApplicationWindow {
 
             for (var i = 0; i < menuElements.length; i++) {
 
-                if(menuElements[i].nome.toLowerCase().search(text) !== -1) {
+                if(menuElements[i].nome.toLowerCase().search(text.toLowerCase()) !== -1) {
 
                     menuElements[i].x = x
                     menuElements[i].y = y

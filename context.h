@@ -22,6 +22,7 @@
 #include <QMimeData>
 #include <QImage>
 #include <QPixmap>
+#include <QPainter>
 
 #include "xlibutil.h"
 
@@ -35,7 +36,7 @@ public:
     Q_INVOKABLE QStringList addLauncher(QString app);
     Q_INVOKABLE int mouseX();
     Q_INVOKABLE int mouseY();
-    Q_INVOKABLE int exec(QString pro);
+    Q_INVOKABLE void exec(QString pro);
     Q_INVOKABLE void minimize(int win);
     Q_INVOKABLE void active(int pid);
     Q_INVOKABLE void manyMinimizes(QString pidname);
@@ -48,6 +49,7 @@ public:
     Q_INVOKABLE QStringList applications();
     Q_INVOKABLE void dragDrop(QString icone, QString app);
     Q_INVOKABLE void addDesktopFile(int pid, QString desktopFile);
+    QString test;
 
 protected:
     Window windowId(int pid);
@@ -57,6 +59,8 @@ private:
     void changeColorBtnMax(QRgb color);
     void changeColorBtnClose(QRgb color);
     void changeColor(int w, int h, QRgb color, QString s);
+    void changeColorBtnMenu(QRgb color);
+    QImage imageOverlay(const QImage& baseImage, const QImage& overlayImage);
     QString launcherFix(QString pro);
     QScreen *screen = QApplication::screens().at(0);
     Display *display;

@@ -17,24 +17,22 @@ ApplicationWindow {
 
     property var neonMenu: Object
     // yellow #FFFB00, purple "#7310A2", crimson #dc143c, black "#333333", blue "#007fff", red #FF0D00, orange #ff9900, green #00ff00
-    property string cor: "#7310A2"
+    property string cor: "#000000"
     property double opc: 0.75
     property double clickOpc: 0.0
     property double startOpc: 0.0
-    property int mainId: 0
+
+    property var showAppInfo: Object
 
     property int launcherX: 0
     property var launcher: []
-    property int appId: 0
 
     property int subLauncherX: 0
     property var subLauncher: []
     property bool subLauncherStarted: true
     property bool windowVerify: false
-    property int subWindowPid: 0
-    property string subWindowLauncher: ""
 
-    signal desktopWindow(int isLaucher, string nitems, string desktopFile, string wmclass)
+    signal desktopWindow(string _nome, string wmclass, int winId)
 
     function clearWindow() {
 
@@ -42,6 +40,7 @@ ApplicationWindow {
 
             for (var i = 0; i < subLauncher.length; i++) {
                 subLauncher[i].destroy()
+                delete subLauncher[i]
             }
 
             subLauncher = []
@@ -61,22 +60,13 @@ ApplicationWindow {
 
         clearWindow()
 
-        var list = []
-
-        if (isLaucher) {
-            list = Context.addLauncher(desktopFile)
-        } else {
-            list = nitems.split(';')
-        }
-
         var fixicede = false
-        list[3] = wmclass
 
         for(var i = 0; i < launcher.length; i++) {
-            if (launcher[i].pidname === list[3]) fixicede = true
+            if (launcher[i].pidname === wmclass) fixicede = true
         }
 
-        if (list[0] !== "" && !fixicede) {
+        if (_nome !== "" && !fixicede) {
 
             if (subLauncherStarted) {
 
@@ -89,8 +79,8 @@ ApplicationWindow {
                 subLauncherStarted = false
             }
 
-            var compon = Qt.createComponent("launchers/Application.qml")
-            var obj = compon.createObject(subAppbar, {'x': subLauncherX, 'y': 0, 'url': list[1], 'nome': list[0], 'exec': list[2], 'pidname': list[3], '_instance': true})
+            var compon = Qt.createComponent("launchers/Applications.qml")
+            var obj = compon.createObject(subAppbar, {'x': subLauncherX, 'y': 0, 'nome': _nome, 'pidname': wmclass, 'winId': winId})
 
             subLauncherX += 50
             subLauncher.push(obj)
@@ -140,6 +130,7 @@ ApplicationWindow {
     }
 
     MouseArea {
+        id: mouseMain
         anchors.fill: parent
         onClicked: {
             clickOpc = startOpc
@@ -147,12 +138,6 @@ ApplicationWindow {
             neonMenu.textSearch.focus = false
             neonMenu.addApps()
         }
-    }
-
-    function menuShow() {
-        var component_ = Qt.createComponent("plugins/NeonMenu.qml")
-        neonMenu = component_.createObject(main)
-        neonMenu.visible = false
     }
 
     Rectangle {
@@ -357,11 +342,11 @@ ApplicationWindow {
 
         Item {
             id: applicationBar
-            x: 52
+            x: 42
             y: 0
             z: 9
             width: 0
-            height: 40    
+            height: 40
         }
 
         Item {
@@ -417,8 +402,15 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        main.menuShow()
-        Context.changeThemeColor(main.cor)
+
+        var component_ = Qt.createComponent("qrc:/plugins/NeonMenu.qml")
+        neonMenu = component_.createObject(main)
+        neonMenu.visible = false
+
+        var info = Qt.createComponent("qrc:/plugins/appShowInfo.qml")
+        showAppInfo = info.createObject(applicationBar)
+
+        //Context.changeThemeColor(main.cor)
         main.visible = true
     }
 }

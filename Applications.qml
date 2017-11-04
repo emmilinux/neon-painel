@@ -8,14 +8,12 @@ Rectangle {
     height: 40
     color: "transparent"
 
-    property string url: ""
     property string nome: ""
-    property string exec: ""
-    property bool _instance: false
     property string pidname: ""
     property bool minimize: true
     property var destak: destak
     property bool tooTip: true
+    property int winId: 0
 
     signal create
     signal destroy
@@ -53,7 +51,7 @@ Rectangle {
 
     Image {
         id: appIcon
-        source: url
+        source: "image://pixmap/" + winId
         anchors.fill: parent
         anchors.margins: 3
         antialiasing: true
@@ -76,25 +74,18 @@ Rectangle {
                 neonMenu.addApps()
                 main.clickOpc = main.startOpc
 
-                if (!_instance) {
-
-                    Context.exec(exec)
-                    _instance = true
-
+                if (!Context.isMinimized(pidname) & Context.isActive(pidname)) {
+                    Context.manyMinimizes(pidname)
+                    minimize = false;
+                    // fix bug, but why this bug?
+                    Context.active(main.mainId)
                 } else {
-
-                    if (!Context.isMinimized(pidname) & Context.isActive(pidname)) {
-                        Context.manyMinimizes(pidname)
-                        minimize = false;
-                        // fix bug, but why this bug?
-                        Context.active(main.mainId)
-                    } else {
-                        Context.manyActives(pidname)
-                        minimize = true;
-                        // fix bug, but why this bug?
-                        Context.active(main.mainId)
-                    }
+                    Context.manyActives(pidname)
+                    minimize = true;
+                    // fix bug, but why this bug?
+                    Context.active(main.mainId)
                 }
+
             } else {
 
                 var size = applicationInfo.nome.length * 8
@@ -108,7 +99,6 @@ Rectangle {
                 showAppInfo.visible = true
             }
         }
-
 
         hoverEnabled: true
 

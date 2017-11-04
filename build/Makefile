@@ -48,13 +48,15 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Neon_Panel/main.cpp \
 		../Neon_Panel/context.cpp \
 		../Neon_Panel/xlibutil.cpp \
-		../Neon_Panel/threads.cpp qrc_qml.cpp \
+		../Neon_Panel/threads.cpp \
+		../Neon_Panel/qquickimage.cpp qrc_qml.cpp \
 		moc_context.cpp \
 		moc_threads.cpp
 OBJECTS       = main.o \
 		context.o \
 		xlibutil.o \
 		threads.o \
+		qquickimage.o \
 		qrc_qml.o \
 		moc_context.o \
 		moc_threads.o
@@ -169,7 +171,8 @@ DIST          = ../../../../Qt5.3.2/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		../Neon_Panel/Neon_Panel.pro ../Neon_Panel/main.cpp \
 		../Neon_Panel/context.cpp \
 		../Neon_Panel/xlibutil.cpp \
-		../Neon_Panel/threads.cpp
+		../Neon_Panel/threads.cpp \
+		../Neon_Panel/qquickimage.cpp
 QMAKE_TARGET  = Neon_Panel
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Neon_Panel
@@ -444,7 +447,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/Neon_Panel1.0.0 || mkdir -p .tmp/Neon_Panel1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/Neon_Panel1.0.0/ && $(COPY_FILE) --parents ../Neon_Panel/qml.qrc .tmp/Neon_Panel1.0.0/ && $(COPY_FILE) --parents ../Neon_Panel/context.h ../Neon_Panel/xlibutil.h ../Neon_Panel/threads.h .tmp/Neon_Panel1.0.0/ && $(COPY_FILE) --parents ../Neon_Panel/main.cpp ../Neon_Panel/context.cpp ../Neon_Panel/xlibutil.cpp ../Neon_Panel/threads.cpp .tmp/Neon_Panel1.0.0/ && (cd `dirname .tmp/Neon_Panel1.0.0` && $(TAR) Neon_Panel1.0.0.tar Neon_Panel1.0.0 && $(COMPRESS) Neon_Panel1.0.0.tar) && $(MOVE) `dirname .tmp/Neon_Panel1.0.0`/Neon_Panel1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/Neon_Panel1.0.0
+	$(COPY_FILE) --parents $(DIST) .tmp/Neon_Panel1.0.0/ && $(COPY_FILE) --parents ../Neon_Panel/qml.qrc .tmp/Neon_Panel1.0.0/ && $(COPY_FILE) --parents ../Neon_Panel/context.h ../Neon_Panel/xlibutil.h ../Neon_Panel/threads.h ../Neon_Panel/qquickimage.h .tmp/Neon_Panel1.0.0/ && $(COPY_FILE) --parents ../Neon_Panel/main.cpp ../Neon_Panel/context.cpp ../Neon_Panel/xlibutil.cpp ../Neon_Panel/threads.cpp ../Neon_Panel/qquickimage.cpp .tmp/Neon_Panel1.0.0/ && (cd `dirname .tmp/Neon_Panel1.0.0` && $(TAR) Neon_Panel1.0.0.tar Neon_Panel1.0.0 && $(COMPRESS) Neon_Panel1.0.0.tar) && $(MOVE) `dirname .tmp/Neon_Panel1.0.0`/Neon_Panel1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/Neon_Panel1.0.0
 
 
 clean:compiler_clean 
@@ -471,9 +474,11 @@ compiler_rcc_clean:
 qrc_qml.cpp: ../Neon_Panel/qml.qrc \
 		../Neon_Panel/utils.js \
 		../Neon_Panel/main.qml \
+		../Neon_Panel/Applications.qml \
 		../Neon_Panel/Application.qml \
 		../Neon_Panel/app.qml \
-		../Neon_Panel/NeonMenu.qml
+		../Neon_Panel/NeonMenu.qml \
+		../Neon_Panel/appShowInfo.qml
 	/home/shenoisz/Qt5.3.2/5.3/gcc_64/bin/rcc -name qml ../Neon_Panel/qml.qrc -o qrc_qml.cpp
 
 compiler_moc_header_make_all: moc_context.cpp moc_threads.cpp
@@ -772,10 +777,14 @@ moc_threads.cpp: ../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QThread \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/QX11Info \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qx11info_x11.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qtx11extrasglobal.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/QQuickImageProvider \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/qquickimageprovider.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/qtquickglobal.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QList \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QVariant \
 		../Neon_Panel/context.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QScreen \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qscreen.h \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QList \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QSize \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QSizeF \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QTransform \
@@ -801,7 +810,6 @@ moc_threads.cpp: ../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QThread \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
 		../Neon_Panel/xlibutil.h \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QVariant \
 		../Neon_Panel/threads.h
 	/home/shenoisz/Qt5.3.2/5.3/gcc_64/bin/moc $(DEFINES) -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/mkspecs/linux-g++ -I/home/shenoisz/Documents/estudos/QT-creator/Neon_Panel -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtQuick -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtQml -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtX11Extras -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtWidgets -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtNetwork -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtGui -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtCore -I. ../Neon_Panel/threads.h -o moc_threads.cpp
 
@@ -952,10 +960,14 @@ main.o: ../Neon_Panel/main.cpp ../../../../Qt5.3.2/5.3/gcc_64/include/QtWidgets/
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/QX11Info \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qx11info_x11.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qtx11extrasglobal.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/QQuickImageProvider \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/qquickimageprovider.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/qtquickglobal.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QList \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QVariant \
 		../Neon_Panel/context.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QScreen \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qscreen.h \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QList \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QSize \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QSizeF \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QTransform \
@@ -981,7 +993,7 @@ main.o: ../Neon_Panel/main.cpp ../../../../Qt5.3.2/5.3/gcc_64/include/QtWidgets/
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
 		../Neon_Panel/xlibutil.h \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QVariant
+		../Neon_Panel/qquickimage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Neon_Panel/main.cpp
 
 context.o: ../Neon_Panel/context.cpp ../Neon_Panel/context.h \
@@ -1283,7 +1295,9 @@ xlibutil.o: ../Neon_Panel/xlibutil.cpp ../Neon_Panel/xlibutil.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtQml/QQmlContext \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtQml/qqmlcontext.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QThread \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qthread.h
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qthread.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o xlibutil.o ../Neon_Panel/xlibutil.cpp
 
 threads.o: ../Neon_Panel/threads.cpp ../Neon_Panel/threads.h \
@@ -1418,10 +1432,14 @@ threads.o: ../Neon_Panel/threads.cpp ../Neon_Panel/threads.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/QX11Info \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qx11info_x11.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qtx11extrasglobal.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/QQuickImageProvider \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/qquickimageprovider.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtQuick/qtquickglobal.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QList \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QVariant \
 		../Neon_Panel/context.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QScreen \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qscreen.h \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QList \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QSize \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QSizeF \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QTransform \
@@ -1446,9 +1464,11 @@ threads.o: ../Neon_Panel/threads.cpp ../Neon_Panel/threads.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qmimedata.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
-		../Neon_Panel/xlibutil.h \
-		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QVariant
+		../Neon_Panel/xlibutil.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o threads.o ../Neon_Panel/threads.cpp
+
+qquickimage.o: ../Neon_Panel/qquickimage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qquickimage.o ../Neon_Panel/qquickimage.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp

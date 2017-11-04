@@ -47,14 +47,18 @@ char* Xlibutil::xwindowType(Window window)
     Atom type;
     int format;
     unsigned long nitems, after;
-    unsigned char *data = 0;
+    unsigned char *data;
     int status;
 
-    status = XGetWindowProperty(display, window, nameAtom, 0l, 1l,
+    status = XGetWindowProperty(display, window, nameAtom, 0L, LONG_MAX,
                                          false, XA_ATOM, &type, &format,
                                          &nitems, &after, &data);
+
+    if (status != Success || nitems == 0) return "_NET_WM_WINDOW_TYPE_NORMAL";
+
     Atom prop = ((Atom *)data)[0];
     data = (unsigned char *)XGetAtomName(display, prop);
+
     return (char *)data;
 }
 
@@ -68,11 +72,15 @@ unsigned char* Xlibutil::xwindowState(Window window)
     unsigned char *data = 0;
     int status;
 
-    status = XGetWindowProperty(display, window, nameAtom, 0l, LONG_MAX,
+    status = XGetWindowProperty(display, window, nameAtom, 0L, LONG_MAX,
                                          false, XA_ATOM, &type, &format,
                                          &nitems, &after, &data);
+
+    if (status != Success || nitems == 0) return 0x0;
+
     Atom prop = ((Atom *)data)[0];
     data = (unsigned char *)XGetAtomName(display, prop);
+
     return data;
 }
 
@@ -81,7 +89,11 @@ char* Xlibutil::xwindowClass(Window window)
     Display *display = QX11Info::display();
     int status;
     unsigned long nitems;
-    return (char*)this->windowProperty(display, window, "WM_CLASS", &nitems, &status);
+    unsigned char* data;
+    data = this->windowProperty(display, window, "WM_CLASS", &nitems, &status);
+
+    if (status != Success || nitems == 0) return "unknow";
+    return (char*)data;
 }
 
 char* Xlibutil::xwindowName(Window window)
@@ -98,6 +110,8 @@ char* Xlibutil::xwindowName(Window window)
     status = XGetWindowProperty(display, window, nameAtom, 0, 65536,
                                          false, utf8Atom, &type, &format,
                                          &nitems, &after, &data);
+
+    if (status != Success || nitems == 0) return "unknow";
     return (char *)data;
 }
 
@@ -112,6 +126,7 @@ int Xlibutil::xwindowPid(Window window)
     data = this->windowProperty(display, window, "_NET_WM_PID", &nitems, &status);
     window_pid = (int) *((unsigned long *)data);
 
+    if (status != Success || nitems == 0) return 0;
     return window_pid;
 }
 
@@ -241,7 +256,7 @@ Window Xlibutil::xwindowIdByClass(QString wmclass)
 
         for (int i = 0; i < nitems; i++)
         {
-            if (wmclass == QString(this->xwindowClass(lists[i])))
+            if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 XFree(prop);
                 return lists[i];
@@ -294,7 +309,7 @@ bool Xlibutil::xisActive(QString wmclass)
 
         for (int i = 0; i < nitems; i++)
         {
-            if (wmclass == QString(this->xwindowClass(lists[i])))
+            if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 XFree(prop);
                 return 1;
@@ -325,7 +340,7 @@ void Xlibutil::xminimizeByClass(QString wmclass)
 
         for (int i = 0; i < nitems; i++)
         {
-            if (wmclass == QString(this->xwindowClass(lists[i])))
+            if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 this->xminimize(lists[i]);
             }
@@ -355,7 +370,7 @@ void Xlibutil::xactiveByClass(QString wmclass)
 
         for (int i = 0; i < nitems; i++)
         {
-            if (wmclass == QString(this->xwindowClass(lists[i])))
+            if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 this->xactive(lists[i]);
             }
@@ -385,7 +400,7 @@ bool Xlibutil::xwindowExist(QString wmclass)
 
         for (int i = 0; i < nitems; i++)
         {
-            if (wmclass == QString(this->xwindowClass(lists[i])))
+            if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 XFree(prop);
                 return true;
@@ -414,7 +429,6 @@ QString Xlibutil::xwindowLauncher(Window window)
 
 void Xlibutil::xaddDesktopFile(int pid, QString arg)
 {
-    //sleep(2);
     Display *display = QX11Info::display();
     //unsigned char* deskfile = (unsigned char*)"/usr/share/applications/xfce4-terminal.desktop";
     unsigned char* deskfile = (unsigned char*)arg.toUtf8().constData();
@@ -428,3 +442,35 @@ void Xlibutil::xaddDesktopFile(int pid, QString arg)
     }
 }
 
+QPixmap Xlibutil::xwindowIcon(Window window)
+{
+    Display *display = QX11Info::display();
+    Atom type;
+    int format;
+    unsigned long bytes_after;
+    ulong* data;
+    unsigned long nitems;
+
+    Atom prop = XInternAtom(display, "_NET_WM_ICON", False);
+
+    XGetWindowProperty(display, window, prop, 0, LONG_MAX, False, AnyPropertyType,
+                       &type, &format, &nitems, &bytes_after, (uchar**)&data);
+
+    QPixmap map;
+
+    if (data != 0x0)
+    {
+        QImage image (data[0], data[1], QImage::Format_ARGB32);
+
+        for (int i=0; i<image.byteCount() / 4; ++i)
+        {
+            ((uint*)image.bits())[i] = data[i + 2];
+        }
+
+        map.convertFromImage(image);
+        //map.scaled(48, 48, Qt::IgnoreAspectRatio);
+    }
+
+    XFree(data);
+    return map;
+}

@@ -5,9 +5,11 @@
     </qresource>
     <qresource prefix="/launchers">
         <file>Application.qml</file>
+        <file>Applications.qml</file>
     </qresource>
     <qresource prefix="/plugins">
         <file>NeonMenu.qml</file>
         <file>app.qml</file>
+        <file>appShowInfo.qml</file>
     </qresource>
 </RCC>

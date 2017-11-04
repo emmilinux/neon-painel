@@ -1,17 +1,47 @@
 #include "context.h"
 
 
+QImage Context::imageOverlay(const QImage& baseImage, const QImage& overlayImage)
+{
+    QImage imageWithOverlay = QImage(baseImage.size(), QImage::Format_ARGB32_Premultiplied);
+    QPainter painter(&imageWithOverlay);
+
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
+    painter.fillRect(imageWithOverlay.rect(), Qt::transparent);
+
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter.drawImage(0, 0, baseImage);
+
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter.drawImage(0, 0, overlayImage);
+
+    painter.end();
+
+    return imageWithOverlay;
+}
+
+void Context::changeColorBtnMenu(QRgb color)
+{
+    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/menu-active2.xpm", "xpm");
+    img.setColor(0, color);
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/menu-active.xpm", "xpm");
+    img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/menu-inactive.xpm", "xpm");
+}
 
 void Context::changeColorBtnMin(QRgb color)
 {
-    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Min.xpm", "xpm");
-    img.setColor(0, color);
+    QImage bg(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Min-transparent.xpm", "xpm");
+    bg.setColor(0, color);
+
+    QImage overlay(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Min.png", "png");
+    QImage img = this->imageOverlay(bg, overlay);
+
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-active.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-inactive.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
-    cor = img.color(0);
+    cor = bg.color(0);
 
     r = cor.red();
     g = cor.green();
@@ -27,7 +57,8 @@ void Context::changeColorBtnMin(QRgb color)
     if (cor.green() > 30 && cor.green() < 225 && green) g += 30;
     if (cor.blue() > 30 && cor.blue() < 225 && blue) b += 30;
 
-    img.setColor(0, qRgb(r, g, b));
+    bg.setColor(0, qRgb(r, g, b));
+    img = this->imageOverlay(bg, overlay);
 
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-prelight.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/hide-pressed.xpm", "xpm");
@@ -35,14 +66,18 @@ void Context::changeColorBtnMin(QRgb color)
 
 void Context::changeColorBtnMax(QRgb color)
 {
-    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Max.xpm", "xpm");
-    img.setColor(0, color);
+    QImage bg(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Max-transparent.xpm", "xpm");
+    bg.setColor(0, color);
+
+    QImage overlay(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Max.png", "png");
+    QImage img = this->imageOverlay(bg, overlay);
+
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-active.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-inactive.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
-    cor = img.color(0);
+    cor = bg.color(0);
 
     r = cor.red();
     g = cor.green();
@@ -58,7 +93,8 @@ void Context::changeColorBtnMax(QRgb color)
     if (cor.green() > 30 && cor.green() < 225 && green) g += 30;
     if (cor.blue() > 30 && cor.blue() < 225 && blue) b += 30;
 
-    img.setColor(0, qRgb(r, g, b));
+    bg.setColor(0, qRgb(r, g, b));
+    img = this->imageOverlay(bg, overlay);
 
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-prelight.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/maximize-pressed.xpm", "xpm");
@@ -68,18 +104,22 @@ void Context::changeColorBtnMax(QRgb color)
 
 void Context::changeColorBtnClose(QRgb color)
 {
-    QImage img(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Close.xpm", "xpm");
-    img.setColor(0, color);
+    QImage bg(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Close-transparent.xpm", "xpm");
+    bg.setColor(0, color);
+
+    QImage overlay(QDir::homePath() + "/.themes/dinamic-color/xfwm4/novos/Close.png", "png");
+    QImage img = this->imageOverlay(bg, overlay);
+
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-active.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-inactive.xpm", "xpm");
 
     QColor cor;
     int r, g, b;
-    cor = img.color(0);
+    cor = bg.color(0);
 
     r = cor.red();
     g = cor.green();
-    b = cor.blue();;
+    b = cor.blue();
 
     bool red, green, blue;
 
@@ -91,7 +131,8 @@ void Context::changeColorBtnClose(QRgb color)
     if (cor.green() > 30 && cor.green() < 225 && green) g += 30;
     if (cor.blue() > 30 && cor.blue() < 225 && blue) b += 30;
 
-    img.setColor(0, qRgb(r, g, b));
+    bg.setColor(0, qRgb(r, g, b));
+    img = this->imageOverlay(bg, overlay);
 
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-prelight.xpm", "xpm");
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-pressed.xpm", "xpm");
@@ -148,6 +189,7 @@ void Context::changeThemeColor(QString rgb)
     this->changeColorBtnClose(color);
     this->changeColorBtnMax(color);
     this->changeColorBtnMin(color);
+    this->changeColorBtnMenu(color);
 
     QProcess process;
     process.start("xfconf-query -c xfwm4 -p /general/theme");
@@ -171,7 +213,6 @@ QString Context::launcherFix(QString exec)
 {
     QStringList list;
     list << "google-chrome-stable" << "google-chrome";
-    //list << "thunar" << "Thunar";
     //list << "TelegramDesktop" << "Telegram";
 
     for(int i = 1; i <= list.length(); i++)
@@ -185,7 +226,7 @@ QString Context::launcherFix(QString exec)
     return exec;
 }
 
-int Context::exec(QString pro)
+void Context::exec(QString pro)
 {
     QString list;
 
@@ -200,9 +241,8 @@ int Context::exec(QString pro)
 
     QProcess *process = new QProcess();
     process->start(list);
-    process->waitForStarted();
-
-    return process->pid();
+    //process->waitForStarted();
+    //return process->processId();
 }
 
 void Context::addDesktopFile(int pid, QString desktopFile)
@@ -309,13 +349,13 @@ QStringList Context::addLauncher(QString app)
                 if (stop) break;
             }
 
-            list << nome << "file://" + icone << exec << wmclass;
+            list << nome << "file://" + icone << exec << wmclass.toLower();
         }
         else
         {
             if (tmp.contains(".ico")) tmp = iconDefault;
 
-            list << nome << "file://" + tmp << exec << wmclass;
+            list << nome << "file://" + tmp << exec << wmclass.toLower();
         }
     }
     else
