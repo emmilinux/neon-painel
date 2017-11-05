@@ -29,6 +29,7 @@ signals:
     void onCreate();
     void onDestroy();
     void onDesktopWindow(QString nome, QString wmclass, int winId);
+    void onClearWindows();
 };
 
 #endif // THREADS_H

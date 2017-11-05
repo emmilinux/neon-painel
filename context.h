@@ -23,6 +23,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
+#include <QLocale>
 
 #include "xlibutil.h"
 
@@ -49,6 +50,7 @@ public:
     Q_INVOKABLE QStringList applications();
     Q_INVOKABLE void dragDrop(QString icone, QString app);
     Q_INVOKABLE void addDesktopFile(int pid, QString desktopFile);
+    Q_INVOKABLE QString defaultIcon();
     QString test;
 
 protected:
@@ -64,6 +66,7 @@ private:
     QString launcherFix(QString pro);
     QScreen *screen = QApplication::screens().at(0);
     Display *display;
+    QString defaultIconTheme;
 };
 
 #endif // CONTEXT_H

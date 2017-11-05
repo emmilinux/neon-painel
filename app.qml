@@ -105,13 +105,14 @@ Rectangle {
         y: 44
         height: 8
         text: nome.length < 10 ? nome : nome.substring(0, 10) + '...'
+        font.pointSize: 8
+        wrapMode: Text.NoWrap
         anchors.right: parent.right
         anchors.rightMargin: 7
         anchors.left: parent.left
         anchors.leftMargin: 7
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 8
-        font.pointSize: 8
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         color: "#ffffff"

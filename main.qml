@@ -34,13 +34,14 @@ ApplicationWindow {
 
     signal desktopWindow(string _nome, string wmclass, int winId)
 
+    signal clearWindows
+
     function clearWindow() {
 
         if (windowVerify) {
 
             for (var i = 0; i < subLauncher.length; i++) {
                 subLauncher[i].destroy()
-                delete subLauncher[i]
             }
 
             subLauncher = []
@@ -53,6 +54,24 @@ ApplicationWindow {
             } else {
                 subLauncherX = 0
             }
+        }
+    }
+
+    onClearWindows: {
+
+        for (var i = 0; i < subLauncher.length; i++) {
+            subLauncher[i].destroy()
+        }
+
+        subLauncher = []
+        subLauncherStarted = true
+        separatorBar.visible = false
+        windowVerify = false
+
+        if (launcher.length > 0) {
+            subLauncherX = 10
+        } else {
+            subLauncherX = 0
         }
     }
 

@@ -15,14 +15,14 @@ void Threads::run()
             XEvent e;
             XNextEvent(display, &e);
             QStringList launchers;
-            Threads *t[99], *m[99];
+            Threads *t[99], *m[99], *n;
 
             //e.type == CreateNotify
             //qDebug() << "create Window - " << ctx.windowName(e.xmap.window);
 
             if (e.type == CreateNotify || e.type == DestroyNotify)
             {
-                QThread::msleep(350);
+                QThread::msleep(300);
 
                 QList<QVariant> list = this->main->property("launcher").toList();
 
@@ -56,16 +56,26 @@ void Threads::run()
                 {
                     this->main->setProperty("windowVerify", true);
 
+                    bool noWindow = true;
+
                     for (int i = 0; i < size; i++)
                     {
                         QString type = ctx.xwindowType(client_list[i]);
 
                         if (type == "_NET_WM_WINDOW_TYPE_NORMAL" || type == "_KDE_NET_WM_WINDOW_TYPE_OVERRIDE")
                         {
+                            noWindow = false;
                             m[i] = new Threads;
                             this->main->connect(m[i], SIGNAL(onDesktopWindow(QString, QString, int)), this->main, SIGNAL(desktopWindow(QString, QString, int)));
                             m[i]->onDesktopWindow(ctx.xwindowName(client_list[i]), QString(ctx.xwindowClass(client_list[i])).toLower(), (int)client_list[i]);
                         }
+                    }
+
+                    if (noWindow)
+                    {
+                        n = new Threads;
+                        this->main->connect(n, SIGNAL(onClearWindows()), this->main, SIGNAL(clearWindows()));
+                        n->onClearWindows();
                     }
 
                     XFree(client_list);

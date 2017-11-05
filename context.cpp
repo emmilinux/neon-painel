@@ -252,6 +252,17 @@ void Context::addDesktopFile(int pid, QString desktopFile)
     }
 }
 
+QString Context::defaultIcon()
+{
+    QProcess process;
+    process.start("xfconf-query -c xsettings -p /Net/IconThemeName");
+    process.waitForFinished();
+    this->defaultIconTheme = process.readLine().replace("\n", "");
+    process.close();
+
+    return "/usr/share/icons/" + this->defaultIconTheme + "/apps/scalable/default-application.svg";
+}
+
 QStringList Context::addLauncher(QString app)
 {
     QStringList list, nitems;
@@ -260,21 +271,18 @@ QStringList Context::addLauncher(QString app)
 
     QString nome, icone, tmp, exec, wmclass, iconDefault;
 
-    QProcess process;
-    process.start("xfconf-query -c xsettings -p /Net/IconThemeName");
-    process.waitForFinished();
-    QString themeName = process.readLine().replace("\n", "");
-
-    process.close();
-    //QString themeName = "xatane-icons";
-
-    iconDefault = "/usr/share/icons/" + themeName + "/apps/scalable/default-application.svg";
+    iconDefault = this->defaultIcon();
 
     if (f.suffix() == "desktop")
     {
+        QLocale locale;
         QSettings settings(app, QSettings::NativeFormat);
+        settings.setIniCodec("UTF-8");
         settings.beginGroup("Desktop Entry");
-        nome = settings.value("Name").toString();
+
+        nome = settings.value("Name[" + locale.name() + "]").toString();
+        if (nome.isEmpty()) nome = settings.value("Name").toString();
+
         tmp = settings.value("Icon").toString();
         exec = settings.value("Exec").toString();
         wmclass = settings.value("StartupWMClass").toString();
@@ -315,7 +323,7 @@ QStringList Context::addLauncher(QString app)
 
                 foreach (QString ext, exts) {
 
-                    icone = path + "/" + themeName + "/apps/scalable/" + tmp + ext;
+                    icone = path + "/" + this->defaultIconTheme + "/apps/scalable/" + tmp + ext;
                     f.setFile(icone);
 
                     if (f.exists()) {
@@ -354,6 +362,7 @@ QStringList Context::addLauncher(QString app)
         else
         {
             if (tmp.contains(".ico")) tmp = iconDefault;
+            if (tmp == "/") tmp = iconDefault;
 
             list << nome << "file://" + tmp << exec << wmclass.toLower();
         }

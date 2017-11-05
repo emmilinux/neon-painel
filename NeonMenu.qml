@@ -119,7 +119,7 @@ ApplicationWindow {
     }
 
     Rectangle {
-        id: rectangle
+        id: rectangleTop
         height: 80
         color: "#000000"
         anchors.right: parent.right
@@ -129,6 +129,32 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.topMargin: 0
         opacity: 0.3
+
+        Rectangle {
+            id:topDestak
+            width: parent.width
+            height: 2
+            color: "#7310A2"
+            anchors.topMargin: 0
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
+
+        Rectangle {
+            id: bottomDestak
+            width: parent.width
+            height: 2
+            color: "#7310A2"
+            anchors.topMargin: 0
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
     }
 
     Rectangle {
@@ -175,6 +201,19 @@ ApplicationWindow {
         opacity: 0.3
         anchors.right: parent.right
         anchors.leftMargin: 0
+
+        Rectangle {
+            id: searchTopDestak
+            width: parent.width
+            height: 2
+            color: "#7310A2"
+            anchors.topMargin: 0
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
 
         Rectangle {
             id: search
@@ -349,7 +388,7 @@ ApplicationWindow {
 
             var app = apps[i].split(';')
 
-            if (app[1] !== "") {
+            if (app[0] !== "" & app[1] !== "") {
 
                 var obj = comp.createObject(launchersApps, {'x': x, 'y': y, 'nome': app[0], 'icone': app[1], 'exec': app[2], 'launcherApp': 'file://' + app[3]})
                 menuElements.push(obj)
