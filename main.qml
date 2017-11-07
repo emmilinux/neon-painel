@@ -18,7 +18,7 @@ ApplicationWindow {
     property var neonMenu: Object
     // yellow #FFFB00, purple "#7310A2", crimson #dc143c, black "#333333", blue "#007fff", red #FF0D00, orange #ff9900, green #00ff00
     property string cor: "#000000"
-    property double opc: 0.75
+    property double opc: 0.65
     property double clickOpc: 0.0
     property double startOpc: 0.0
 

@@ -72,7 +72,7 @@ Rectangle {
             hoverEnabled: true
 
             onHoveredChanged: {
-                parent.opacity = 0.5
+                parent.opacity = 0.75
             }
 
             onExited: {

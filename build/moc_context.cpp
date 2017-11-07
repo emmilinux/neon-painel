@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Context_t {
-    QByteArrayData data[28];
-    char stringdata[241];
+    QByteArrayData data[31];
+    char stringdata[275];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,41 +30,45 @@ struct qt_meta_stringdata_Context_t {
 static const qt_meta_stringdata_Context_t qt_meta_stringdata_Context = {
     {
 QT_MOC_LITERAL(0, 0, 7),
-QT_MOC_LITERAL(1, 8, 11),
-QT_MOC_LITERAL(2, 20, 0),
-QT_MOC_LITERAL(3, 21, 3),
-QT_MOC_LITERAL(4, 25, 6),
-QT_MOC_LITERAL(5, 32, 6),
-QT_MOC_LITERAL(6, 39, 4),
-QT_MOC_LITERAL(7, 44, 3),
-QT_MOC_LITERAL(8, 48, 8),
-QT_MOC_LITERAL(9, 57, 3),
-QT_MOC_LITERAL(10, 61, 6),
-QT_MOC_LITERAL(11, 68, 3),
-QT_MOC_LITERAL(12, 72, 13),
-QT_MOC_LITERAL(13, 86, 7),
-QT_MOC_LITERAL(14, 94, 9),
-QT_MOC_LITERAL(15, 104, 11),
-QT_MOC_LITERAL(16, 116, 7),
-QT_MOC_LITERAL(17, 124, 11),
-QT_MOC_LITERAL(18, 136, 7),
-QT_MOC_LITERAL(19, 144, 16),
-QT_MOC_LITERAL(20, 161, 3),
-QT_MOC_LITERAL(21, 165, 8),
-QT_MOC_LITERAL(22, 174, 12),
-QT_MOC_LITERAL(23, 187, 8),
-QT_MOC_LITERAL(24, 196, 5),
-QT_MOC_LITERAL(25, 202, 14),
-QT_MOC_LITERAL(26, 217, 11),
-QT_MOC_LITERAL(27, 229, 11)
+QT_MOC_LITERAL(1, 8, 15),
+QT_MOC_LITERAL(2, 24, 0),
+QT_MOC_LITERAL(3, 25, 11),
+QT_MOC_LITERAL(4, 37, 3),
+QT_MOC_LITERAL(5, 41, 6),
+QT_MOC_LITERAL(6, 48, 6),
+QT_MOC_LITERAL(7, 55, 4),
+QT_MOC_LITERAL(8, 60, 3),
+QT_MOC_LITERAL(9, 64, 8),
+QT_MOC_LITERAL(10, 73, 3),
+QT_MOC_LITERAL(11, 77, 6),
+QT_MOC_LITERAL(12, 84, 3),
+QT_MOC_LITERAL(13, 88, 13),
+QT_MOC_LITERAL(14, 102, 7),
+QT_MOC_LITERAL(15, 110, 9),
+QT_MOC_LITERAL(16, 120, 11),
+QT_MOC_LITERAL(17, 132, 7),
+QT_MOC_LITERAL(18, 140, 11),
+QT_MOC_LITERAL(19, 152, 7),
+QT_MOC_LITERAL(20, 160, 16),
+QT_MOC_LITERAL(21, 177, 3),
+QT_MOC_LITERAL(22, 181, 8),
+QT_MOC_LITERAL(23, 190, 12),
+QT_MOC_LITERAL(24, 203, 8),
+QT_MOC_LITERAL(25, 212, 5),
+QT_MOC_LITERAL(26, 218, 14),
+QT_MOC_LITERAL(27, 233, 11),
+QT_MOC_LITERAL(28, 245, 11),
+QT_MOC_LITERAL(29, 257, 8),
+QT_MOC_LITERAL(30, 266, 8)
     },
-    "Context\0addLauncher\0\0app\0mouseX\0mouseY\0"
-    "exec\0pro\0minimize\0win\0active\0pid\0"
-    "manyMinimizes\0pidname\0minimizes\0"
-    "isMinimized\0wmclass\0manyActives\0actives\0"
-    "changeThemeColor\0rgb\0isActive\0"
+    "Context\0basepathChanged\0\0addLauncher\0"
+    "app\0mouseX\0mouseY\0exec\0pro\0minimize\0"
+    "win\0active\0pid\0manyMinimizes\0pidname\0"
+    "minimizes\0isMinimized\0wmclass\0manyActives\0"
+    "actives\0changeThemeColor\0rgb\0isActive\0"
     "applications\0dragDrop\0icone\0addDesktopFile\0"
-    "desktopFile\0defaultIcon"
+    "desktopFile\0defaultIcon\0userName\0"
+    "basepath"
 };
 #undef QT_MOC_LITERAL
 
@@ -74,50 +78,64 @@ static const uint qt_meta_data_Context[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
-       0,    0, // properties
+      19,   14, // methods
+       1,  158, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    0,  109,    2, 0x06 /* Public */,
 
  // methods: name, argc, parameters, tag, flags
-       1,    1,   99,    2, 0x02 /* Public */,
-       4,    0,  102,    2, 0x02 /* Public */,
-       5,    0,  103,    2, 0x02 /* Public */,
-       6,    1,  104,    2, 0x02 /* Public */,
-       8,    1,  107,    2, 0x02 /* Public */,
-      10,    1,  110,    2, 0x02 /* Public */,
-      12,    1,  113,    2, 0x02 /* Public */,
-      14,    1,  116,    2, 0x02 /* Public */,
-      15,    1,  119,    2, 0x02 /* Public */,
-      17,    1,  122,    2, 0x02 /* Public */,
-      18,    1,  125,    2, 0x02 /* Public */,
-      19,    1,  128,    2, 0x02 /* Public */,
-      21,    1,  131,    2, 0x02 /* Public */,
-      22,    0,  134,    2, 0x02 /* Public */,
-      23,    2,  135,    2, 0x02 /* Public */,
-      25,    2,  140,    2, 0x02 /* Public */,
-      27,    0,  145,    2, 0x02 /* Public */,
+       3,    1,  110,    2, 0x02 /* Public */,
+       5,    0,  113,    2, 0x02 /* Public */,
+       6,    0,  114,    2, 0x02 /* Public */,
+       7,    1,  115,    2, 0x02 /* Public */,
+       9,    1,  118,    2, 0x02 /* Public */,
+      11,    1,  121,    2, 0x02 /* Public */,
+      13,    1,  124,    2, 0x02 /* Public */,
+      15,    1,  127,    2, 0x02 /* Public */,
+      16,    1,  130,    2, 0x02 /* Public */,
+      18,    1,  133,    2, 0x02 /* Public */,
+      19,    1,  136,    2, 0x02 /* Public */,
+      20,    1,  139,    2, 0x02 /* Public */,
+      22,    1,  142,    2, 0x02 /* Public */,
+      23,    0,  145,    2, 0x02 /* Public */,
+      24,    2,  146,    2, 0x02 /* Public */,
+      26,    2,  151,    2, 0x02 /* Public */,
+      28,    0,  156,    2, 0x02 /* Public */,
+      29,    0,  157,    2, 0x02 /* Public */,
+
+ // signals: parameters
+    QMetaType::Void,
 
  // methods: parameters
-    QMetaType::QStringList, QMetaType::QString,    3,
+    QMetaType::QStringList, QMetaType::QString,    4,
     QMetaType::Int,
     QMetaType::Int,
-    QMetaType::Void, QMetaType::QString,    7,
-    QMetaType::Void, QMetaType::Int,    9,
-    QMetaType::Void, QMetaType::Int,   11,
-    QMetaType::Void, QMetaType::QString,   13,
-    QMetaType::Void, QMetaType::Int,    9,
-    QMetaType::Int, QMetaType::QString,   16,
-    QMetaType::Void, QMetaType::QString,   13,
-    QMetaType::Void, QMetaType::Int,   11,
-    QMetaType::Void, QMetaType::QString,   20,
-    QMetaType::Int, QMetaType::QString,   13,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::QString,   14,
+    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Int, QMetaType::QString,   17,
+    QMetaType::Void, QMetaType::QString,   14,
+    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::QString,   21,
+    QMetaType::Int, QMetaType::QString,   14,
     QMetaType::QStringList,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   24,    3,
-    QMetaType::Void, QMetaType::Int, QMetaType::QString,   11,   26,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   25,    4,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString,   12,   27,
     QMetaType::QString,
+    QMetaType::QString,
+
+ // properties: name, type, flags
+      30, QMetaType::QString, 0x00495001,
+
+ // properties: notify_signal_id
+       0,
 
        0        // eod
 };
@@ -127,31 +145,43 @@ void Context::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     if (_c == QMetaObject::InvokeMetaMethod) {
         Context *_t = static_cast<Context *>(_o);
         switch (_id) {
-        case 0: { QStringList _r = _t->addLauncher((*reinterpret_cast< QString(*)>(_a[1])));
+        case 0: _t->basepathChanged(); break;
+        case 1: { QStringList _r = _t->addLauncher((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 1: { int _r = _t->mouseX();
+        case 2: { int _r = _t->mouseX();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 2: { int _r = _t->mouseY();
+        case 3: { int _r = _t->mouseY();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 3: _t->exec((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 4: _t->minimize((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->active((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->manyMinimizes((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 7: _t->minimizes((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 8: { int _r = _t->isMinimized((*reinterpret_cast< QString(*)>(_a[1])));
+        case 4: _t->exec((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 5: _t->minimize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->active((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->manyMinimizes((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 8: _t->minimizes((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: { int _r = _t->isMinimized((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 9: _t->manyActives((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 10: _t->actives((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->changeThemeColor((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 12: { int _r = _t->isActive((*reinterpret_cast< QString(*)>(_a[1])));
+        case 10: _t->manyActives((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 11: _t->actives((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->changeThemeColor((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 13: { int _r = _t->isActive((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 13: { QStringList _r = _t->applications();
+        case 14: { QStringList _r = _t->applications();
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 14: _t->dragDrop((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 15: _t->addDesktopFile((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 16: { QString _r = _t->defaultIcon();
+        case 15: _t->dragDrop((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 16: _t->addDesktopFile((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 17: { QString _r = _t->defaultIcon();
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 18: { QString _r = _t->userName();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        void **func = reinterpret_cast<void **>(_a[1]);
+        {
+            typedef void (Context::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Context::basepathChanged)) {
+                *result = 0;
+            }
         }
     }
 }
@@ -183,14 +213,48 @@ int Context::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 19;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
+        if (_id < 19)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 17;
+        _id -= 19;
     }
+#ifndef QT_NO_PROPERTIES
+      else if (_c == QMetaObject::ReadProperty) {
+        void *_v = _a[0];
+        switch (_id) {
+        case 0: *reinterpret_cast< QString*>(_v) = basePath(); break;
+        default: break;
+        }
+        _id -= 1;
+    } else if (_c == QMetaObject::WriteProperty) {
+        _id -= 1;
+    } else if (_c == QMetaObject::ResetProperty) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyDesignable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyScriptable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyStored) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyEditable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyUser) {
+        _id -= 1;
+    } else if (_c == QMetaObject::RegisterPropertyMetaType) {
+        if (_id < 1)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 1;
+    }
+#endif // QT_NO_PROPERTIES
     return _id;
+}
+
+// SIGNAL 0
+void Context::basepathChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE

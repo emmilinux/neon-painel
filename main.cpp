@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 
     QDesktopWidget desktop;
     Context ctx;
+    ctx.basepath = app.applicationDirPath();
 
     QQuickImage image;
     image.ctx = &ctx;

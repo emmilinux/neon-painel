@@ -113,7 +113,7 @@ Rectangle {
         hoverEnabled: true
 
         onHoveredChanged: {
-            bgOpc.opacity = 0.5
+            bgOpc.opacity = 0.75
         }
 
         onExited: {

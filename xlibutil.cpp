@@ -158,6 +158,11 @@ XWindowAttributes Xlibutil::attrWindow(Display *display, Window window)
     return attr;
 }
 
+void Xlibutil::resizeWindow(Display *display, Window window, int x, int y, unsigned int w, unsigned int h)
+{
+    XMoveResizeWindow(display, window, x, y, w, h);
+}
+
 void Xlibutil::xactive(Window window)
 {
     Display *display = QX11Info::display();

@@ -551,3 +551,8 @@ void Context::dragDrop(QString icone, QString app)
     //drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction);
     drag->exec(drag->defaultAction());
 }
+
+QString Context::userName()
+{
+    return qgetenv("USER").toUpper();
+}

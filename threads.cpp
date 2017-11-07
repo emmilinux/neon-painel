@@ -46,7 +46,6 @@ void Threads::run()
                 }
 
                 //qDebug() << ctx.xwindowName(e.xmap.window);
-
                 Display *display = QX11Info::display();
                 unsigned long size;
 

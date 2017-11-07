@@ -43,10 +43,11 @@ public:
     QString xwindowLauncher(Window window);
     void xaddDesktopFile(int pid, QString arg);
     QPixmap xwindowIcon(Window window);
+    XWindowAttributes attrWindow(Display *display, Window window);
+    void resizeWindow(Display *display, Window window, int x, int y, unsigned int w, unsigned int h);
 
 private:
     QThread t;
-    XWindowAttributes attrWindow(Display *display, Window window);
 };
 
 #endif // XUTIL_H

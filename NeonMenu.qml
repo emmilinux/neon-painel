@@ -158,16 +158,30 @@ ApplicationWindow {
     }
 
     Rectangle {
-        id: mask
-        width: 64
-        height: 64
+        id: subMask
+        width: 68
+        height: 68
         antialiasing: true
         anchors.left: parent.left
         anchors.leftMargin: 14
         anchors.top: parent.top
         anchors.topMargin: 6
-        visible: false
-        radius: 32
+        visible: true
+        radius: 33
+        color: "#7310A2"
+
+        Rectangle {
+            id: mask
+            width: 64
+            height: 64
+            antialiasing: true
+            anchors.left: parent.left
+            anchors.leftMargin: 16
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            visible: false
+            radius: 32
+        }
     }
 
     Image {
@@ -176,10 +190,10 @@ ApplicationWindow {
         height: 64
         antialiasing: true
         anchors.left: parent.left
-        anchors.leftMargin: 14
+        anchors.leftMargin: 16
         anchors.top: parent.top
-        anchors.topMargin: 6
-        source: "file:///home/shenoisz/Documents/estudos/html5/NeonPanel/images/02.jpg"
+        anchors.topMargin: 8
+        source: "file://" + Context.basepath + "/01.jpg"
 
         fillMode: Image.PreserveAspectCrop
         layer.enabled: true
@@ -241,7 +255,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 12
+        anchors.bottomMargin: 10
         text: "Buscar..."
         antialiasing: true
         //cursorVisible: true
@@ -300,7 +314,7 @@ ApplicationWindow {
         id: text1
         width: 149
         height: 14
-        text: qsTr("SHENOISZ")
+        text: Context.userName() //qsTr("SHENOISZ")
         anchors.left: parent.left
         anchors.leftMargin: 90
         anchors.top: parent.top

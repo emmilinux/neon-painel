@@ -32,6 +32,7 @@ class Context : public QObject, public Xlibutil
 {
 
     Q_OBJECT
+    Q_PROPERTY(QString basepath READ basePath NOTIFY basepathChanged)
 
 public:
     Q_INVOKABLE QStringList addLauncher(QString app);
@@ -51,10 +52,14 @@ public:
     Q_INVOKABLE void dragDrop(QString icone, QString app);
     Q_INVOKABLE void addDesktopFile(int pid, QString desktopFile);
     Q_INVOKABLE QString defaultIcon();
-    QString test;
+    Q_INVOKABLE QString userName();
+    QString basepath;
 
 protected:
     Window windowId(int pid);
+
+signals:
+    void basepathChanged();
 
 private:
     void changeColorBtnMin(QRgb color);
@@ -67,6 +72,10 @@ private:
     QScreen *screen = QApplication::screens().at(0);
     Display *display;
     QString defaultIconTheme;
+
+    QString basePath() const {
+        return this->basepath;
+    }
 };
 
 #endif // CONTEXT_H
