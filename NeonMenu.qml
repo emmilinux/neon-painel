@@ -57,6 +57,7 @@ ApplicationWindow {
 
         onClicked: {
             textSearch.focus = false
+            showAppInfo.visible = false
         }
     }
 
@@ -405,6 +406,7 @@ ApplicationWindow {
             if (app[0] !== "" & app[1] !== "") {
 
                 var obj = comp.createObject(launchersApps, {'x': x, 'y': y, 'nome': app[0], 'icone': app[1], 'exec': app[2], 'launcherApp': 'file://' + app[3]})
+                obj.iconOpc = 0.0
                 menuElements.push(obj)
 
                 x += 74

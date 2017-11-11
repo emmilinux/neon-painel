@@ -5,6 +5,30 @@ Xlibutil::Xlibutil()
 
 }
 
+void Xlibutil::xwindowClose(Window window)
+{
+
+    Display *display = QX11Info::display();
+
+    //Atom atom = XInternAtom(display, "_NET_DELETE_WINDOW", False);
+    //XSetWMProtocols(display, window, &atom, 1);
+    //XDestroyWindow(display, window);
+
+    Atom atom = XInternAtom(display, "_NET_CLOSE_WINDOW", False);
+
+    XEvent xev;
+    memset(&xev, 0, sizeof(xev));
+    xev.type = ClientMessage;
+    xev.xclient.window = window;
+    xev.xclient.message_type = atom;
+    xev.xclient.format = 32;
+    xev.xclient.data.l[0] = atom;
+    xev.xclient.data.l[1] = CurrentTime;
+
+    XSendEvent(display, DefaultRootWindow(display), False, SubstructureNotifyMask, &xev);
+    XFlush(display);
+}
+
 void Xlibutil::xreservedSpace(Window window, int h)
 {
     Display *display = QX11Info::display();
@@ -16,6 +40,7 @@ void Xlibutil::xreservedSpace(Window window, int h)
     XChangeProperty(display, window,
                     XInternAtom(display, "_NET_WM_STRUT", False),
                     XA_CARDINAL, 32, PropModeReplace, (unsigned char *)&prop, 4);
+    XFlush(display);
 }
 
 void Xlibutil::xchange(Window window, const char * atom)
@@ -27,6 +52,7 @@ void Xlibutil::xchange(Window window, const char * atom)
     XChangeProperty(display, window,
                     XInternAtom(display, "_NET_WM_WINDOW_TYPE", False),
                     XA_ATOM, 32, PropModeReplace, (unsigned char *)&tmp, 1);
+    XFlush(display);
 }
 
 char* Xlibutil::xwindowType(Window window)
@@ -58,7 +84,7 @@ char* Xlibutil::xwindowType(Window window)
 
     Atom prop = ((Atom *)data)[0];
     data = (unsigned char *)XGetAtomName(display, prop);
-
+    XFlush(display);
     return (char *)data;
 }
 
@@ -80,7 +106,7 @@ unsigned char* Xlibutil::xwindowState(Window window)
 
     Atom prop = ((Atom *)data)[0];
     data = (unsigned char *)XGetAtomName(display, prop);
-
+    XFlush(display);
     return data;
 }
 
@@ -93,6 +119,7 @@ char* Xlibutil::xwindowClass(Window window)
     data = this->windowProperty(display, window, "WM_CLASS", &nitems, &status);
 
     if (status != Success || nitems == 0) return "unknow";
+    XFlush(display);
     return (char*)data;
 }
 
@@ -112,6 +139,7 @@ char* Xlibutil::xwindowName(Window window)
                                          &nitems, &after, &data);
 
     if (status != Success || nitems == 0) return "unknow";
+    XFlush(display);
     return (char *)data;
 }
 
@@ -127,6 +155,7 @@ int Xlibutil::xwindowPid(Window window)
     window_pid = (int) *((unsigned long *)data);
 
     if (status != Success || nitems == 0) return 0;
+    XFlush(display);
     return window_pid;
 }
 
@@ -179,6 +208,7 @@ void Xlibutil::xactive(Window window)
     xev.xclient.data.l[1] = CurrentTime;
 
     XSendEvent(display, DefaultRootWindow(display), False, SubstructureNotifyMask, &xev);
+    XFlush(display);
 }
 
 void Xlibutil::xminimize(Window window)
@@ -188,6 +218,7 @@ void Xlibutil::xminimize(Window window)
     XWindowAttributes attr = this->attrWindow(display, window);
     screen = XScreenNumberOfScreen(attr.screen);
     XIconifyWindow(display, window, screen);
+    XFlush(display);
 }
 
 Window* Xlibutil::xwindows(Display *display, unsigned long *size)
@@ -195,7 +226,6 @@ Window* Xlibutil::xwindows(Display *display, unsigned long *size)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long bytes_after;
@@ -204,6 +234,7 @@ Window* Xlibutil::xwindows(Display *display, unsigned long *size)
         int status = XGetWindowProperty(display, DefaultRootWindow(display), atom, 0, 4096 / 4, False, AnyPropertyType, &actual_type, &actual_format, size, &bytes_after, &prop);
 
         Window *lists = (Window *)((unsigned long *)prop);
+        XFlush(display);
         return lists;
     }
 
@@ -217,7 +248,6 @@ Window Xlibutil::xwindowID(int pid)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long nitems;
@@ -233,11 +263,13 @@ Window Xlibutil::xwindowID(int pid)
             if (pid == this->xwindowPid(lists[i]))
             {
                 XFree(prop);
+                XFlush(display);
                 return lists[i];
             }
         }
     }
 
+    XFlush(display);
     return NULL;
 }
 
@@ -248,7 +280,6 @@ Window Xlibutil::xwindowIdByClass(QString wmclass)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long nitems;
@@ -264,11 +295,13 @@ Window Xlibutil::xwindowIdByClass(QString wmclass)
             if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 XFree(prop);
+                XFlush(display);
                 return lists[i];
             }
         }
     }
 
+    XFlush(display);
     return NULL;
 }
 
@@ -276,7 +309,6 @@ bool Xlibutil::xsingleActive(QString wmclass)
 {
     Display *display = QX11Info::display();
     Atom atom = XInternAtom(display, "_NET_ACTIVE_WINDOW", True);
-    XFlush(display);
     Atom actual_type;
     int actual_format;
     unsigned long nitems;
@@ -285,12 +317,15 @@ bool Xlibutil::xsingleActive(QString wmclass)
 
     int status = XGetWindowProperty(display, this->xwindowIdByClass(wmclass), atom, 0, 4096 / 4, False, AnyPropertyType, &actual_type, &actual_format, &nitems, &bytes_after, &prop);
 
-    if ((unsigned char*)prop != 0x0) {
+    if ((unsigned char*)prop != 0x0)
+    {
         XFree(prop);
+        XFlush(display);
         return true;
     }
 
     XFree(prop);
+    XFlush(display);
     return false;
 }
 
@@ -301,7 +336,6 @@ bool Xlibutil::xisActive(QString wmclass)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_ACTIVE_WINDOW", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long nitems;
@@ -317,11 +351,13 @@ bool Xlibutil::xisActive(QString wmclass)
             if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 XFree(prop);
+                XFlush(display);
                 return 1;
             }
         }
     }
 
+    XFlush(display);
     return 0;
 }
 
@@ -332,7 +368,6 @@ void Xlibutil::xminimizeByClass(QString wmclass)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long nitems;
@@ -352,6 +387,7 @@ void Xlibutil::xminimizeByClass(QString wmclass)
         }
 
         XFree(prop);
+        XFlush(display);
     }
 }
 
@@ -362,7 +398,6 @@ void Xlibutil::xactiveByClass(QString wmclass)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long nitems;
@@ -381,6 +416,7 @@ void Xlibutil::xactiveByClass(QString wmclass)
             }
         }
 
+        XFlush(display);
         XFree(prop);
     }
 }
@@ -392,7 +428,6 @@ bool Xlibutil::xwindowExist(QString wmclass)
     if (display)
     {
         Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
-        XFlush(display);
         Atom actual_type;
         int actual_format;
         unsigned long nitems;
@@ -408,10 +443,12 @@ bool Xlibutil::xwindowExist(QString wmclass)
             if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
             {
                 XFree(prop);
+                XFlush(display);
                 return true;
             }
         }
 
+        XFlush(display);
         XFree(prop);
     }
 
@@ -428,6 +465,7 @@ QString Xlibutil::xwindowLauncher(Window window)
 
     data = this->windowProperty(display, window, "_BAMF_DESKTOP_FILE", &nitems, &status);
     launcher = (char *)data;
+    XFlush(display);
 
     return launcher;
 }
@@ -444,6 +482,7 @@ void Xlibutil::xaddDesktopFile(int pid, QString arg)
         XFlush(display);
         Atom atom = XInternAtom(display, "_BAMF_DESKTOP_FILE", False);
         status = XChangeProperty(display, this->xwindowID(pid), atom, XA_STRING, 8, PropModeReplace, deskfile, arg.length());
+        XFlush(display);
     }
 }
 
@@ -477,5 +516,6 @@ QPixmap Xlibutil::xwindowIcon(Window window)
     }
 
     XFree(data);
+    XFlush(display);
     return map;
 }

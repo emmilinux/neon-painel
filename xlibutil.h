@@ -11,6 +11,7 @@
 #include <QThread>
 #include <QPixmap>
 #include <QImage>
+#include <QWindow>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -45,6 +46,7 @@ public:
     QPixmap xwindowIcon(Window window);
     XWindowAttributes attrWindow(Display *display, Window window);
     void resizeWindow(Display *display, Window window, int x, int y, unsigned int w, unsigned int h);
+    void xwindowClose(Window window);
 
 private:
     QThread t;

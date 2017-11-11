@@ -20,18 +20,12 @@ Rectangle {
     signal create
     signal destroy
 
-    /* not work
-    ToolTip {
-             id: toolTip
-             text: "ToolTip"
-    }
-*/
     onCreate: {
-        destak.visible = true;
+        destak.visible = true
     }
 
     onDestroy: {
-        destak.visible = false;
+        destak.visible = false
     }
 
     Rectangle {
@@ -67,13 +61,13 @@ Rectangle {
 
         onClicked: {
 
-            if(mouse.button & Qt.LeftButton) {
+            if (mouse.button & Qt.LeftButton) {
 
                 showAppInfo.visible = false
 
                 neonMenu.visible = false
                 neonMenu.textSearch.focus = false
-                neonMenu.addApps()
+                //neonMenu.addApps()
                 main.clickOpc = main.startOpc
 
                 if (!_instance) {
@@ -84,28 +78,25 @@ Rectangle {
                 } else {
 
                     if (!Context.isMinimized(pidname) & Context.isActive(pidname)) {
+
                         Context.manyMinimizes(pidname)
                         minimize = false;
-                        // fix bug, but why this bug?
-                        Context.active(main.mainId)
+
                     } else {
                         Context.manyActives(pidname)
                         minimize = true;
-                        // fix bug, but why this bug?
-                        Context.active(main.mainId)
                     }
                 }
             } else {
 
-                var size = applicationInfo.nome.length * 8
-                showAppInfo.appNameText = nome
-                showAppInfo.width = size
-
-                var pos = Context.mouseX() - (size / 2)
-
-                showAppInfo.x = pos < 0 ? 0 : pos
+                showAppInfo.winIds = Context.windowsBywmclass(pidname)
                 showAppInfo.y = main.y - 40
+                showAppInfo.setText()
                 showAppInfo.visible = true
+
+                clickOpc = startOpc
+                neonMenu.visible = false
+                neonMenu.textSearch.focus = false
             }
         }
 

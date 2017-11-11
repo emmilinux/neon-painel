@@ -13,11 +13,12 @@ Rectangle {
     property string nome: ""
     property string exec: ""
     property string launcherApp: ""
+    property double iconOpc: 0.0
 
     Rectangle {
         anchors.fill: parent
         color: "#7310A2"//"#ffffff"
-        opacity: 0.0
+        opacity: iconOpc
 
         MouseArea {
 

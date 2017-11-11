@@ -252,6 +252,54 @@ void Context::addDesktopFile(int pid, QString desktopFile)
     }
 }
 
+QList<int> Context::windowsBywmclass(QString wmclass)
+{
+    Display *display = QX11Info::display();
+    QList<int> list;
+
+    if (display)
+    {
+        Atom atom = XInternAtom(display, "_NET_CLIENT_LIST", True);
+        Atom actual_type;
+        int actual_format;
+        unsigned long nitems;
+        unsigned long bytes_after;
+        unsigned char *prop;
+
+        int status = XGetWindowProperty(display, DefaultRootWindow(display), atom, 0, 4096 / 4, False, AnyPropertyType, &actual_type, &actual_format, &nitems, &bytes_after, &prop);
+
+        Window *lists = (Window *)((unsigned long *)prop);
+
+        for (int i = 0; i < nitems; i++)
+        {
+            if (wmclass == QString(this->xwindowClass(lists[i])).toLower())
+            {
+                list.append(lists[i]);
+            }
+        }
+
+        XFree(prop);
+        XFlush(display);
+    }
+
+    return list;
+}
+
+QString Context::windowName(int window)
+{
+    return QString(this->xwindowName(window));
+}
+
+void Context::windowActive(int window)
+{
+    this->xactive(window);
+}
+
+void Context::windowClose(int window)
+{
+    this->xwindowClose(window);
+}
+
 QString Context::defaultIcon()
 {
     QProcess process;
@@ -384,8 +432,6 @@ Window Context::windowId(int pid)
     unsigned long *desktop;
     unsigned long size;
 
-    XFlush(display);
-
     Window *client_list = this->xwindows(display, &size);
 
     if (client_list != NULL)
@@ -404,6 +450,7 @@ Window Context::windowId(int pid)
     }
 
     XFree(client_list);
+    XFlush(display);
     return winId;
 }
 
@@ -423,12 +470,14 @@ int Context::isMinimized(QString wmclass)
             {
                 if ((const char *)this->xwindowState(lists[i]) == "_NET_WM_STATE_HIDDEN")
                 {
+                    XFlush(display);
                     return 1;
                 }
             }
         }
     }
 
+    XFlush(display);
     return 0;
 }
 
@@ -446,6 +495,8 @@ void Context::minimizes(int pid)
     {
         this->xminimizeByClass(QString(this->xwindowClass(id)));
     }
+
+    XFlush(display);
 }
 
 void Context::minimize(int pid)
@@ -457,6 +508,8 @@ void Context::minimize(int pid)
     {
         this->xminimize(id);
     }
+
+    XFlush(display);
 }
 
 void Context::manyActives(QString pidname)
@@ -473,6 +526,8 @@ void Context::actives(int pid)
     {
         this->xactiveByClass(QString(this->xwindowClass(id)));
     }
+
+    XFlush(display);
 }
 
 void Context::active(int pid)
@@ -484,6 +539,8 @@ void Context::active(int pid)
     {
        this->xactive(id);
     }
+
+    XFlush(display);
 }
 
 int Context::isActive(QString pidname)

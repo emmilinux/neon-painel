@@ -24,6 +24,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QLocale>
+#include <QList>
 
 #include "xlibutil.h"
 
@@ -53,6 +54,10 @@ public:
     Q_INVOKABLE void addDesktopFile(int pid, QString desktopFile);
     Q_INVOKABLE QString defaultIcon();
     Q_INVOKABLE QString userName();
+    Q_INVOKABLE QString windowName(int window);
+    Q_INVOKABLE void windowActive(int window);
+    Q_INVOKABLE void windowClose(int window);
+    Q_INVOKABLE QList<int> windowsBywmclass(QString wmclass);
     QString basepath;
 
 protected:

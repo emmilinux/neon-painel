@@ -81,8 +81,16 @@ ApplicationWindow {
 
         var fixicede = false
 
-        for(var i = 0; i < launcher.length; i++) {
-            if (launcher[i].pidname === wmclass) fixicede = true
+        for (var j = 0; j < launcher.length; j++) {
+            if (launcher[j].pidname === wmclass) {
+                fixicede = true
+            }
+        }
+
+        for (var t = 0; t < subLauncher.length; t++) {
+            if (subLauncher[t].pidname === wmclass) {
+                fixicede = true
+            }
         }
 
         if (_nome !== "" && !fixicede) {
@@ -127,7 +135,7 @@ ApplicationWindow {
             var files = drop.urls.toString().split(',');
 
             for (var i = 0; i <  files.length; i++) {
-                //console.log("item", files[i])
+
                 var list = Context.addLauncher(files[i])
 
                 if (list[0] !== "") {
@@ -155,7 +163,8 @@ ApplicationWindow {
             clickOpc = startOpc
             neonMenu.visible = false
             neonMenu.textSearch.focus = false
-            neonMenu.addApps()
+            //neonMenu.addApps()
+            showAppInfo.visible = false
         }
     }
 
@@ -209,6 +218,7 @@ ApplicationWindow {
 
                 onClicked: {
 
+                    showAppInfo.visible = false
                     neonMenu.x = 0;
                     neonMenu.y = main.y - (neonMenu.height + 5)
 
@@ -428,6 +438,7 @@ ApplicationWindow {
 
         var info = Qt.createComponent("qrc:/plugins/appShowInfo.qml")
         showAppInfo = info.createObject(applicationBar)
+        showAppInfo.visible = false
 
         //Context.changeThemeColor(main.cor)
         main.visible = true
