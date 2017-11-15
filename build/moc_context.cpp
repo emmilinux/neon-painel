@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Context_t {
-    QByteArrayData data[37];
-    char stringdata[346];
+    QByteArrayData data[40];
+    char stringdata[370];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -65,7 +65,10 @@ QT_MOC_LITERAL(32, 284, 12),
 QT_MOC_LITERAL(33, 297, 11),
 QT_MOC_LITERAL(34, 309, 16),
 QT_MOC_LITERAL(35, 326, 10),
-QT_MOC_LITERAL(36, 337, 8)
+QT_MOC_LITERAL(36, 337, 15),
+QT_MOC_LITERAL(37, 353, 5),
+QT_MOC_LITERAL(38, 359, 1),
+QT_MOC_LITERAL(39, 361, 8)
     },
     "Context\0basepathChanged\0\0addLauncher\0"
     "app\0mouseX\0mouseY\0exec\0pro\0minimize\0"
@@ -76,7 +79,7 @@ QT_MOC_LITERAL(36, 337, 8)
     "desktopFile\0defaultIcon\0userName\0"
     "windowName\0window\0windowActive\0"
     "windowClose\0windowsBywmclass\0QList<int>\0"
-    "basepath"
+    "showMoreWindows\0winId\0h\0basepath"
 };
 #undef QT_MOC_LITERAL
 
@@ -86,39 +89,40 @@ static const uint qt_meta_data_Context[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
-       1,  190, // properties
+      24,   14, // methods
+       1,  200, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  129,    2, 0x06 /* Public */,
+       1,    0,  134,    2, 0x06 /* Public */,
 
  // methods: name, argc, parameters, tag, flags
-       3,    1,  130,    2, 0x02 /* Public */,
-       5,    0,  133,    2, 0x02 /* Public */,
-       6,    0,  134,    2, 0x02 /* Public */,
-       7,    1,  135,    2, 0x02 /* Public */,
-       9,    1,  138,    2, 0x02 /* Public */,
-      11,    1,  141,    2, 0x02 /* Public */,
-      13,    1,  144,    2, 0x02 /* Public */,
-      15,    1,  147,    2, 0x02 /* Public */,
-      16,    1,  150,    2, 0x02 /* Public */,
-      18,    1,  153,    2, 0x02 /* Public */,
-      19,    1,  156,    2, 0x02 /* Public */,
-      20,    1,  159,    2, 0x02 /* Public */,
-      22,    1,  162,    2, 0x02 /* Public */,
-      23,    0,  165,    2, 0x02 /* Public */,
-      24,    2,  166,    2, 0x02 /* Public */,
-      26,    2,  171,    2, 0x02 /* Public */,
-      28,    0,  176,    2, 0x02 /* Public */,
-      29,    0,  177,    2, 0x02 /* Public */,
-      30,    1,  178,    2, 0x02 /* Public */,
-      32,    1,  181,    2, 0x02 /* Public */,
-      33,    1,  184,    2, 0x02 /* Public */,
-      34,    1,  187,    2, 0x02 /* Public */,
+       3,    1,  135,    2, 0x02 /* Public */,
+       5,    0,  138,    2, 0x02 /* Public */,
+       6,    0,  139,    2, 0x02 /* Public */,
+       7,    1,  140,    2, 0x02 /* Public */,
+       9,    1,  143,    2, 0x02 /* Public */,
+      11,    1,  146,    2, 0x02 /* Public */,
+      13,    1,  149,    2, 0x02 /* Public */,
+      15,    1,  152,    2, 0x02 /* Public */,
+      16,    1,  155,    2, 0x02 /* Public */,
+      18,    1,  158,    2, 0x02 /* Public */,
+      19,    1,  161,    2, 0x02 /* Public */,
+      20,    1,  164,    2, 0x02 /* Public */,
+      22,    1,  167,    2, 0x02 /* Public */,
+      23,    0,  170,    2, 0x02 /* Public */,
+      24,    2,  171,    2, 0x02 /* Public */,
+      26,    2,  176,    2, 0x02 /* Public */,
+      28,    0,  181,    2, 0x02 /* Public */,
+      29,    0,  182,    2, 0x02 /* Public */,
+      30,    1,  183,    2, 0x02 /* Public */,
+      32,    1,  186,    2, 0x02 /* Public */,
+      33,    1,  189,    2, 0x02 /* Public */,
+      34,    1,  192,    2, 0x02 /* Public */,
+      36,    2,  195,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -146,9 +150,10 @@ static const uint qt_meta_data_Context[] = {
     QMetaType::Void, QMetaType::Int,   31,
     QMetaType::Void, QMetaType::Int,   31,
     0x80000000 | 35, QMetaType::QString,   17,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   37,   38,
 
  // properties: name, type, flags
-      36, QMetaType::QString, 0x00495001,
+      39, QMetaType::QString, 0x00495001,
 
  // properties: notify_signal_id
        0,
@@ -194,6 +199,7 @@ void Context::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 21: _t->windowClose((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 22: { QList<int> _r = _t->windowsBywmclass((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QList<int>*>(_a[0]) = _r; }  break;
+        case 23: _t->showMoreWindows((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -235,13 +241,13 @@ int Context::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 24)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 23;
+        _id -= 24;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {

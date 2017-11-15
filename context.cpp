@@ -138,6 +138,11 @@ void Context::changeColorBtnClose(QRgb color)
     img.save(QDir::homePath() + "/.themes/dinamic-color/xfwm4/close-pressed.xpm", "xpm");
 }
 
+void Context::showMoreWindows(int winId, int h)
+{
+    this->xreservedSpace(winId, h);
+}
+
 void Context::changeColor(int w, int h, QRgb color, QString s)
 {
     QImage img(w, h, QImage::Format_RGB888);

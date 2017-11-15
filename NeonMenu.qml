@@ -44,6 +44,8 @@ ApplicationWindow {
     onActiveChanged: {
         if (!active) {
             //neonMenu.close()
+            textSearch.text = ""
+            textSearch.focus = true
             neonMenu.visible = false
             main.clickOpc = main.startOpc
             textSearch.focus = false
@@ -56,7 +58,11 @@ ApplicationWindow {
         anchors.fill: parent
 
         onClicked: {
+
+            addApps()
             textSearch.focus = false
+            textSearch.text = "Buscar..."
+
             showAppInfo.visible = false
         }
     }
@@ -108,6 +114,9 @@ ApplicationWindow {
 
                     btnUp = true
                     addApps()
+
+                    textSearch.focus = false
+                    textSearch.text = "Buscar..."
                 }
             }
 
@@ -257,9 +266,10 @@ ApplicationWindow {
         anchors.leftMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
-        text: "Buscar..."
+        text: ""
         antialiasing: true
         //cursorVisible: true
+        focus: true
         font.bold: false
         font.pointSize: 12
         verticalAlignment: Text.AlignVCenter
@@ -268,17 +278,8 @@ ApplicationWindow {
         selectByMouse: true
         wrapMode: TextEdit.Wrap
 
-        property bool ativo: true
-
         onFocusChanged: {
-
-            if (ativo)  {
-                ativo = false
-                text = ""
-            } else {
-                ativo = true
-                text = "Buscar..."
-            }
+            text = ""
         }
 
         Keys.onReleased: {

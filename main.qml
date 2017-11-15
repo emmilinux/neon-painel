@@ -21,6 +21,7 @@ ApplicationWindow {
     property double opc: 0.65
     property double clickOpc: 0.0
     property double startOpc: 0.0
+    property int mainId: 0
 
     property var showAppInfo: Object
 
@@ -28,12 +29,12 @@ ApplicationWindow {
     property var launcher: []
 
     property int subLauncherX: 0
+    property int subLauncherX2: 0
     property var subLauncher: []
     property bool subLauncherStarted: true
     property bool windowVerify: false
 
     signal desktopWindow(string _nome, string wmclass, int winId)
-
     signal clearWindows
 
     function clearWindow() {
@@ -51,8 +52,10 @@ ApplicationWindow {
 
             if (launcher.length > 0) {
                 subLauncherX = 10
+                subLauncherX2 = 0
             } else {
                 subLauncherX = 0
+                subLauncherX2 = 0
             }
         }
     }
@@ -70,8 +73,10 @@ ApplicationWindow {
 
         if (launcher.length > 0) {
             subLauncherX = 10
+            subLauncherX2 = 0
         } else {
             subLauncherX = 0
+            subLauncherX2 = 0
         }
     }
 
@@ -80,6 +85,7 @@ ApplicationWindow {
         clearWindow()
 
         var fixicede = false
+        subAppbar.width = 50
 
         for (var j = 0; j < launcher.length; j++) {
             if (launcher[j].pidname === wmclass) {
@@ -91,6 +97,7 @@ ApplicationWindow {
             if (subLauncher[t].pidname === wmclass) {
                 fixicede = true
             }
+            subAppbar.width += 50
         }
 
         if (_nome !== "" && !fixicede) {
@@ -99,19 +106,40 @@ ApplicationWindow {
 
                 if (launcher.length > 0) {
                     subLauncherX = 10
+                    subLauncherX2 = 0
                 } else {
                     subLauncherX = 0
+                    subLauncherX2 = 0
                 }
 
                 subLauncherStarted = false
             }
 
             var compon = Qt.createComponent("launchers/Applications.qml")
-            var obj = compon.createObject(subAppbar, {'x': subLauncherX, 'y': 0, 'nome': _nome, 'pidname': wmclass, 'winId': winId})
+            var obj;
 
-            subLauncherX += 50
+            if (subAppbar.x + subLauncherX + 50 < plugins.x) {
+                btnShowMore.visible = false
+                obj = compon.createObject(subAppbar, {'x': subLauncherX, 'y': 0, 'nome': _nome, 'pidname': wmclass, 'winId': winId})
+                subLauncherX += 50
+
+                if (!btnShowMore.moreArea) {
+                    btnShowMore.moreArea = true
+                    verticaline.height -= 40
+                    btnShowMore.rotation = 0
+                    main.y += 40
+                    main.height -= 40
+                    Context.showMoreWindows(mainId, 40)
+                }
+
+            } else {
+                btnShowMore.visible = true
+                obj = compon.createObject(subAppbar2, {'x': subLauncherX2, 'y': 0, 'nome': _nome, 'pidname': wmclass, 'winId': winId})
+                subLauncherX2 += 50
+            }
+
+
             subLauncher.push(obj)
-            subAppbar.width += 50
             obj.destak.visible = true
             if (launcher.length > 0) separatorBar.visible = true
         }
@@ -132,23 +160,26 @@ ApplicationWindow {
 
         onDropped: {
 
-            var files = drop.urls.toString().split(',');
+            if (applicationBar.x + applicationBar.width + 200 <  plugins.x) {
 
-            for (var i = 0; i <  files.length; i++) {
+                var files = drop.urls.toString().split(',');
 
-                var list = Context.addLauncher(files[i])
+                for (var i = 0; i <  files.length; i++) {
 
-                if (list[0] !== "") {
+                    var list = Context.addLauncher(files[i])
 
-                    var component = Qt.createComponent("launchers/Application.qml")
-                    var obj = component.createObject(applicationBar, {'x': launcherX, 'y': 0, 'url': list[1], 'nome': list[0], 'exec': list[2], 'pidname': list[3]})
+                    if (list[0] !== "") {
 
-                    launcherX += 50
-                    launcher.push(obj)
-                    applicationBar.width += 50
-                    subAppbar.x = applicationBar.x + applicationBar.width
+                        var component = Qt.createComponent("launchers/Application.qml")
+                        var obj = component.createObject(applicationBar, {'x': launcherX, 'y': 0, 'url': list[1], 'nome': list[0], 'exec': list[2], 'pidname': list[3]})
+
+                        launcherX += 50
+                        launcher.push(obj)
+                        applicationBar.width += 50
+                        subAppbar.x = applicationBar.x + applicationBar.width
+                    }
+
                 }
-
             }
 
             drop.acceptProposedAction()
@@ -222,13 +253,16 @@ ApplicationWindow {
                     neonMenu.x = 0;
                     neonMenu.y = main.y - (neonMenu.height + 5)
 
+                    neonMenu.textSearch.text = ""
+                    neonMenu.textSearch.focus = true
+                    neonMenu.addApps()
+
                     if (!neonMenu.visible) {
                         neonMenu.visible = true
                         clickOpc = 0.50
                     } else {
                         clickOpc = startOpc
                         neonMenu.visible = false
-                        neonMenu.textSearch.focus = false
                         neonMenu.addApps()
                     }
 
@@ -396,6 +430,34 @@ ApplicationWindow {
            }
         }
 
+        Item {
+           id: subAppbar2
+           y: 40
+           x: 0
+           width: plugins.x
+           height: 40
+
+           Rectangle {
+               y: 1
+               x: 0
+               width: plugins.x
+               height: 1
+               color: "#ffffff"
+               opacity: 0.1
+           }
+
+           Rectangle {
+              id: separatorBar2
+              x: 0
+              y: 5
+              width: 1
+              height: 30
+              color: "#ffffff"
+              opacity: 0.3
+              visible: false
+           }
+        }
+
         Rectangle {
             id: plugins
             x: parent.width - 150
@@ -403,6 +465,55 @@ ApplicationWindow {
             height: parent.height
             width: 150
             color: "transparent"
+
+            Rectangle {
+                id: verticaline
+                x: 0
+                y: 0
+                height: 40
+                width: 20
+                color: "transparent"
+
+                Image {
+                    id: btnShowMore
+                    y: (parent.height / 2) - (height / 2)
+                    height: 20
+                    width: 20
+                    source: "file://" + Context.basepath + '/icon-down.png'
+                    rotation: 0
+                    visible: true
+
+                    property bool moreArea: true
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+
+                            if (parent.moreArea) {
+
+                                main.y -= 40
+                                btnShowMore.moreArea = false
+                                verticaline.height += 40
+                                btnShowMore.rotation = 180
+                                main.height += 40
+                                Context.showMoreWindows(mainId, 80)
+
+                            } else {
+
+                                btnShowMore.moreArea = true
+                                verticaline.height -= 40
+                                btnShowMore.rotation = 0
+                                main.y += 40
+                                main.height -= 40
+                                Context.showMoreWindows(mainId, 40)
+                            }
+
+                            y = (parent.height / 2) - (height / 2)
+                        }
+                    }
+                }
+            }
 
             Text {
                 id: clock

@@ -58,6 +58,7 @@ public:
     Q_INVOKABLE void windowActive(int window);
     Q_INVOKABLE void windowClose(int window);
     Q_INVOKABLE QList<int> windowsBywmclass(QString wmclass);
+    Q_INVOKABLE void showMoreWindows(int winId, int h);
     QString basepath;
 
 protected:

@@ -627,6 +627,11 @@ moc_context.cpp: ../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QObject \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qmimedata.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPainter \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpainter.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QLocale \
 		../Neon_Panel/xlibutil.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/QX11Info \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qx11info_x11.h \
@@ -809,6 +814,11 @@ moc_threads.cpp: ../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QThread \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qmimedata.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPainter \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpainter.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QLocale \
 		../Neon_Panel/xlibutil.h \
 		../Neon_Panel/threads.h
 	/home/shenoisz/Qt5.3.2/5.3/gcc_64/bin/moc $(DEFINES) -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/mkspecs/linux-g++ -I/home/shenoisz/Documents/estudos/QT-creator/Neon_Panel -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtQuick -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtQml -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtX11Extras -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtWidgets -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtNetwork -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtGui -I/home/shenoisz/Qt5.3.2/5.3/gcc_64/include/QtCore -I. ../Neon_Panel/threads.h -o moc_threads.cpp
@@ -992,6 +1002,11 @@ main.o: ../Neon_Panel/main.cpp ../../../../Qt5.3.2/5.3/gcc_64/include/QtWidgets/
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qmimedata.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPainter \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpainter.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QLocale \
 		../Neon_Panel/xlibutil.h \
 		../Neon_Panel/qquickimage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Neon_Panel/main.cpp
@@ -1140,6 +1155,11 @@ context.o: ../Neon_Panel/context.cpp ../Neon_Panel/context.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qmimedata.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPainter \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpainter.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QLocale \
 		../Neon_Panel/xlibutil.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/QX11Info \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtX11Extras/qx11info_x11.h \
@@ -1464,6 +1484,11 @@ threads.o: ../Neon_Panel/threads.cpp ../Neon_Panel/threads.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/qmimedata.h \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QImage \
 		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPixmap \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/QPainter \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpainter.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt5.3.2/5.3/gcc_64/include/QtCore/QLocale \
 		../Neon_Panel/xlibutil.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o threads.o ../Neon_Panel/threads.cpp
 

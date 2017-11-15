@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    int h = 40;
     QDesktopWidget desktop;
     Context ctx;
     ctx.basepath = app.applicationDirPath();
@@ -24,8 +25,8 @@ int main(int argc, char *argv[])
 
     QObject *main = engine.rootObjects().first();
     QWindow *window = qobject_cast<QWindow *>(main); // (QWindow *)main
-    window->setGeometry(0, desktop.height() - 40, desktop.width(), 40);
-    //window->setProperty("mainId", window->winId());
+    window->setGeometry(0, desktop.height() - h, desktop.width(), h);
+    window->setProperty("mainId", window->winId());
     window->xChanged(Qt::WA_X11DoNotAcceptFocus | Qt::WA_X11NetWmWindowTypeDock);
 
     app.setAttribute(Qt::AA_X11InitThreads);
