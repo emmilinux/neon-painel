@@ -36,6 +36,7 @@ class Context : public QObject, public Xlibutil
     Q_PROPERTY(QString basepath READ basePath NOTIFY basepathChanged)
 
 public:
+    // Public Methods
     Q_INVOKABLE QStringList addLauncher(QString app);
     Q_INVOKABLE int mouseX();
     Q_INVOKABLE int mouseY();
@@ -54,11 +55,14 @@ public:
     Q_INVOKABLE void addDesktopFile(int pid, QString desktopFile);
     Q_INVOKABLE QString defaultIcon();
     Q_INVOKABLE QString userName();
+    Q_INVOKABLE QString userAvatar();
     Q_INVOKABLE QString windowName(int window);
     Q_INVOKABLE void windowActive(int window);
     Q_INVOKABLE void windowClose(int window);
     Q_INVOKABLE QList<int> windowsBywmclass(QString wmclass);
     Q_INVOKABLE void showMoreWindows(int winId, int h);
+
+    // Public Attributes
     QString basepath;
 
 protected:
@@ -68,6 +72,7 @@ signals:
     void basepathChanged();
 
 private:
+    // Private Methods
     void changeColorBtnMin(QRgb color);
     void changeColorBtnMax(QRgb color);
     void changeColorBtnClose(QRgb color);
@@ -75,13 +80,13 @@ private:
     void changeColorBtnMenu(QRgb color);
     QImage imageOverlay(const QImage& baseImage, const QImage& overlayImage);
     QString launcherFix(QString pro);
+    QString basePath() const;
+
+    // Private Attributes
     QScreen *screen = QApplication::screens().at(0);
     Display *display;
     QString defaultIconTheme;
 
-    QString basePath() const {
-        return this->basepath;
-    }
 };
 
 #endif // CONTEXT_H
