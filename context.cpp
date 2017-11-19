@@ -231,6 +231,11 @@ QString Context::launcherFix(QString exec)
     return exec;
 }
 
+QString Context::basePath() const
+{
+    return this->basepath;
+}
+
 void Context::exec(QString pro)
 {
     QString list;
@@ -617,4 +622,11 @@ void Context::dragDrop(QString icone, QString app)
 QString Context::userName()
 {
     return qgetenv("USER").toUpper();
+}
+
+QString Context::userAvatar()
+{
+    QString ava;
+    ava = "file://home/" + qgetenv("USER") + "/.face";
+    return ava;
 }

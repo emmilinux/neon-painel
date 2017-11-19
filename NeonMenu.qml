@@ -195,7 +195,7 @@ ApplicationWindow {
     }
 
     Image {
-        id: image
+        id: userAvatar
         width: 64
         height: 64
         antialiasing: true
@@ -203,7 +203,7 @@ ApplicationWindow {
         anchors.leftMargin: 16
         anchors.top: parent.top
         anchors.topMargin: 8
-        source: "file://" + Context.basepath + "/01.jpg"
+        source: Context.userAvatar()
 
         fillMode: Image.PreserveAspectCrop
         layer.enabled: true
