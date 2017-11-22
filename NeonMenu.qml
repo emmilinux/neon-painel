@@ -144,7 +144,7 @@ ApplicationWindow {
             id:topDestak
             width: parent.width
             height: 2
-            color: "#7310A2"
+            color: main.detailColor
             anchors.topMargin: 0
             anchors.leftMargin: 0
             anchors.rightMargin: 0
@@ -157,7 +157,7 @@ ApplicationWindow {
             id: bottomDestak
             width: parent.width
             height: 2
-            color: "#7310A2"
+            color: main.detailColor
             anchors.topMargin: 0
             anchors.leftMargin: 0
             anchors.rightMargin: 0
@@ -178,7 +178,7 @@ ApplicationWindow {
         anchors.topMargin: 6
         visible: true
         radius: 33
-        color: "#7310A2"
+        color: main.detailColor
 
         Rectangle {
             id: mask
@@ -230,7 +230,7 @@ ApplicationWindow {
             id: searchTopDestak
             width: parent.width
             height: 2
-            color: "#7310A2"
+            color: main.detailColor
             anchors.topMargin: 0
             anchors.leftMargin: 0
             anchors.rightMargin: 0
@@ -274,7 +274,7 @@ ApplicationWindow {
         font.pointSize: 12
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
-        selectionColor: "#007fff"
+        selectionColor: main.detailColor
         selectByMouse: true
         wrapMode: TextEdit.Wrap
 

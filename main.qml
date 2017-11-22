@@ -13,17 +13,20 @@ ApplicationWindow {
     height: 40
     title: qsTr("Neon Painel")
     color: "transparent"
+    property alias rectangle10: rectangle10
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowDoesNotAcceptFocus
 
     property var neonMenu: Object
     // yellow #FFFB00, purple "#7310A2", crimson #dc143c, black "#333333", blue "#007fff", red #FF0D00, orange #ff9900, green #00ff00
     property string cor: "#000000"
+    property string detailColor: "#7310A2"
     property double opc: 0.65
     property double clickOpc: 0.0
     property double startOpc: 0.0
     property int mainId: 0
 
     property var showAppInfo: Object
+    property var acessoRapido: Object
 
     property int launcherX: 0
     property var launcher: []
@@ -129,6 +132,7 @@ ApplicationWindow {
                     btnShowMore.rotation = 0
                     main.y += 40
                     main.height -= 40
+                    accessSpeed.y = 0
                     Context.showMoreWindows(mainId, 40)
                 }
 
@@ -196,6 +200,11 @@ ApplicationWindow {
             neonMenu.textSearch.focus = false
             //neonMenu.addApps()
             showAppInfo.visible = false
+            acessoRapido.visible = false
+
+            if (acessoRapido.btnObj) {
+                acessoRapido.btnObj.destroy()
+            }
         }
     }
 
@@ -248,6 +257,12 @@ ApplicationWindow {
                 anchors.fill: parent
 
                 onClicked: {
+
+                    acessoRapido.visible = false
+
+                    if (acessoRapido.btnObj) {
+                        acessoRapido.btnObj.destroy()
+                    }
 
                     showAppInfo.visible = false
                     neonMenu.x = 0;
@@ -460,10 +475,10 @@ ApplicationWindow {
 
         Rectangle {
             id: plugins
-            x: parent.width - 150
+            x: parent.width - 110
             y: 0
             height: parent.height
-            width: 150
+            width: 110
             color: "transparent"
 
             Rectangle {
@@ -490,6 +505,12 @@ ApplicationWindow {
 
                         onClicked: {
 
+                            acessoRapido.visible = false
+
+                            if (acessoRapido.btnObj) {
+                                acessoRapido.btnObj.destroy()
+                            }
+
                             if (parent.moreArea) {
 
                                 main.y -= 40
@@ -497,6 +518,7 @@ ApplicationWindow {
                                 verticaline.height += 40
                                 btnShowMore.rotation = 180
                                 main.height += 40
+                                accessSpeed.y = 19
                                 Context.showMoreWindows(mainId, 80)
 
                             } else {
@@ -506,6 +528,7 @@ ApplicationWindow {
                                 btnShowMore.rotation = 0
                                 main.y += 40
                                 main.height -= 40
+                                accessSpeed.y = 0
                                 Context.showMoreWindows(mainId, 40)
                             }
 
@@ -527,7 +550,7 @@ ApplicationWindow {
                 anchors.top: parent.top
                 anchors.topMargin: 12
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 35
                 font.pointSize: 12
                 color: "#ffffff"
 
@@ -535,8 +558,67 @@ ApplicationWindow {
                     interval: 100
                     running: true
                     repeat: true
-                    onTriggered: clock.text = Utils.getTime()
+                    onTriggered: {
+                        var d = Utils.getTime().split('|')
+                        clock.text = d[0]
+                        acessoRapido.acessText.text = d[1]
+                    }
                }
+            }
+
+            Rectangle {
+                id: accessSpeed
+                x: 0
+                y: 0
+                width: 15
+                height: 40
+                color: "transparent"
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onHoveredChanged: {
+                        neonMenu.visible = false
+                        acessoRapido.visible = true
+                    }
+
+                    Rectangle {
+                        y: 15
+                        width: parent.width
+                        height: 2
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        color: "#ffffff"
+                    }
+
+                    Rectangle {
+                        id: rectangle10
+                        y: 20
+                        width: parent.width
+                        height: 2
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        color: "#ffffff"
+                    }
+
+                    Rectangle {
+                        y: 25
+                        width: parent.width
+                        height: 2
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        color: "#ffffff"
+                    }
+                }
             }
         }
     }
@@ -547,11 +629,17 @@ ApplicationWindow {
         neonMenu = component_.createObject(main)
         neonMenu.visible = false
 
-        var info = Qt.createComponent("qrc:/plugins/appShowInfo.qml")
+        var info = Qt.createComponent("qrc:/launchers/appShowInfo.qml")
         showAppInfo = info.createObject(applicationBar)
         showAppInfo.visible = false
 
-        //Context.changeThemeColor(main.cor)
+        var access = Qt.createComponent("qrc:/plugins/Access.qml")
+        acessoRapido = access.createObject(main)
+
+        Context.changeThemeColor(main.detailColor)
         main.visible = true
+
+        //Context.libraryVoidLoad("write")
+        //Context.libraryVoidLoad(17, "shenoisz", "showMsg")
     }
 }

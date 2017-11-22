@@ -14,11 +14,9 @@ void Threads::run()
         {
             XEvent e;
             XNextEvent(display, &e);
-            QStringList launchers;
             Threads *t[99], *m[99], *n;
 
             //e.type == CreateNotify
-            //qDebug() << "create Window - " << ctx.windowName(e.xmap.window);
 
             if (e.type == CreateNotify || e.type == DestroyNotify)
             {

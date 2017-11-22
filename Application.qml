@@ -34,14 +34,14 @@ Rectangle {
         y: parent.height - 1.5
         height: 1.5
         width: parent.width
-        color: "#7310A2"//"#007fff"
+        color: main.detailColor//"#007fff"
         visible: false
     }
 
     Rectangle {
         id: bgOpc
         anchors.fill: parent
-        color: "#7310A2"//"#ffffff"
+        color: main.detailColor//"#ffffff"
         opacity: 0.0
     }
 
@@ -61,11 +61,13 @@ Rectangle {
 
         onClicked: {
 
+            acessoRapido.visible = false
+            neonMenu.visible = false
+
             if (mouse.button & Qt.LeftButton) {
 
                 showAppInfo.visible = false
 
-                neonMenu.visible = false
                 neonMenu.textSearch.focus = false
                 //neonMenu.addApps()
                 main.clickOpc = main.startOpc
@@ -95,7 +97,6 @@ Rectangle {
                 showAppInfo.visible = true
 
                 clickOpc = startOpc
-                neonMenu.visible = false
                 neonMenu.textSearch.focus = false
             }
         }

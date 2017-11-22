@@ -25,6 +25,8 @@
 #include <QPainter>
 #include <QLocale>
 #include <QList>
+#include <QLibrary>
+#include <QFunctionPointer>
 
 #include "xlibutil.h"
 
@@ -59,6 +61,13 @@ public:
     Q_INVOKABLE void windowClose(int window);
     Q_INVOKABLE QList<int> windowsBywmclass(QString wmclass);
     Q_INVOKABLE void showMoreWindows(int winId, int h);
+    Q_INVOKABLE void libraryVoidLoad(int arg, QString args, QString funcName, QString pluginName);
+    Q_INVOKABLE int libraryIntLoad(int arg, QString args, QString funcName, QString pluginName);
+    Q_INVOKABLE QString libraryQStringLoad(int arg, QString args, QString funcName, QString pluginName);
+    Q_INVOKABLE void libraryVoidLoad(QString funcName, QString pluginName);
+    Q_INVOKABLE int libraryIntLoad(QString funcName, QString pluginName);
+    Q_INVOKABLE QString libraryQStringLoad(QString funcName, QString pluginName);
+    Q_INVOKABLE QStringList plugins();
     QString basepath;
 
 protected:

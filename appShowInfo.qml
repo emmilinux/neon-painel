@@ -84,7 +84,7 @@ ApplicationWindow {
                     }
 
                     onHoveredChanged: {
-                        parent.color = "#7310A2"
+                        parent.color = main.detailColor
                     }
 
                     onExited: {

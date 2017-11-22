@@ -1,6 +1,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 
+
 Rectangle {
     id: rectangle
     x: 0
@@ -17,7 +18,7 @@ Rectangle {
 
     Rectangle {
         anchors.fill: parent
-        color: "#7310A2"//"#ffffff"
+        color: main.detailColor//"#ffffff"
         opacity: iconOpc
 
         MouseArea {

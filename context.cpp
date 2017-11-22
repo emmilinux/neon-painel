@@ -1,6 +1,101 @@
 #include "context.h"
 
 
+int Context::libraryIntLoad(int arg, QString args, QString funcName, QString pluginName)
+{
+    QLibrary library(this->basepath + "/plugins/" + pluginName);
+    int num;
+
+    if (library.load())
+    {
+        typedef int (*func)(int i, QString s);
+        func f = (func)library.resolve(funcName.toUtf8());
+
+        if (f);
+            num = f(arg, args);
+    }
+
+    return num;
+}
+
+int Context::libraryIntLoad(QString funcName, QString pluginName)
+{
+    QLibrary library(this->basepath + "/plugins/" + pluginName);
+    int num;
+
+    if (library.load())
+    {
+        typedef int (*func)();
+        func f = (func)library.resolve(funcName.toUtf8());
+
+        if (f);
+            num = f();
+    }
+
+    return num;
+}
+
+QString Context::libraryQStringLoad(int arg, QString args, QString funcName, QString pluginName)
+{
+    QLibrary library(this->basepath + "/plugins/" + pluginName);
+    QString text;
+
+    if (library.load())
+    {
+        typedef QString (*func)(int i, QString s);
+        func f = (func)library.resolve(funcName.toUtf8());
+
+        if (f);
+            text = f(arg, args);
+    }
+
+    return text;
+}
+
+QString Context::libraryQStringLoad(QString funcName, QString pluginName)
+{
+    QLibrary library(this->basepath + "/plugins/" + pluginName);
+    QString text;
+
+    if (library.load())
+    {
+        typedef QString (*func)();
+        func f = (func)library.resolve(funcName.toUtf8());
+
+        if (f);
+            text = f();
+    }
+
+    return text;
+}
+
+void Context::libraryVoidLoad(int arg, QString args, QString funcName, QString pluginName)
+{
+    QLibrary library(this->basepath + "/plugins/" + pluginName);
+
+    if (library.load())
+    {
+        typedef void (*func)(int i, QString s);
+        func f = (func)library.resolve(funcName.toUtf8());
+
+        if (f);
+            f(arg, args);
+    }
+}
+
+void Context::libraryVoidLoad(QString funcName, QString pluginName)
+{
+    QLibrary library(this->basepath + "/plugins/" + pluginName);
+
+    if (library.load())
+    {
+        QFunctionPointer func = library.resolve(funcName.toUtf8());
+
+        if (func);
+            func();
+    }
+}
+
 QImage Context::imageOverlay(const QImage& baseImage, const QImage& overlayImage)
 {
     QImage imageWithOverlay = QImage(baseImage.size(), QImage::Format_ARGB32_Premultiplied);
@@ -246,8 +341,6 @@ void Context::exec(QString pro)
 
     QProcess *process = new QProcess();
     process->start(list);
-    //process->waitForStarted();
-    //return process->processId();
 }
 
 void Context::addDesktopFile(int pid, QString desktopFile)
@@ -565,14 +658,39 @@ int Context::mouseY()
     return Mouse.y();
 }
 
+QStringList Context::plugins()
+{
+    QStringList list;
+
+    QDir dir(this->basepath + "/plugins");
+    QFileInfoList filelist = dir.entryInfoList(QDir::Dirs | QDir::NoDot | QDir::NoDotAndDotDot);
+
+    for (int i = 0; i < filelist.length(); i++)
+    {
+        QLocale locale;
+        QSettings settings(dir.path() + "/" + filelist.at(i).fileName() + "/config", QSettings::NativeFormat);
+        settings.setIniCodec("UTF-8");
+        settings.beginGroup("AcessSpeed");
+
+        QString cname = settings.value("Name[" + locale.name() + "]").toString();
+        if (cname.isEmpty()) cname = settings.value("Name").toString();
+
+        if (!cname.isEmpty())
+            list << cname + ";" + settings.value("Icon").toString() + ";" + settings.value("Qml").toString() + ";" + settings.value("Lib").toString()+ ";" + settings.value("MoreSettingsss").toString();
+        settings.endGroup();
+    }
+
+    return list;
+}
+
 QStringList Context::applications()
 {
     QStringList list, tmp, appsPath;
 
     appsPath << "/usr/share/applications/" << QDir::homePath() + "/.local/share/applications/";
 
-    foreach (QString path, appsPath) {
-
+    foreach (QString path, appsPath)
+    {
         QDir dir(path);
         QFileInfoList filelist = dir.entryInfoList(QDir::Files);
 

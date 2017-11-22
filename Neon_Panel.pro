@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     threads.cpp \
     qquickimage.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    resources.qrc
 
 LIBS += -lX11
 
