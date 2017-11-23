@@ -158,7 +158,7 @@ ApplicationWindow {
        for (var i = 0; i < btns.length; i++) {
 
            var items = btns[i].split(";")
-           var obj = accessBtn.createObject(acessItemsAdd, {'x': px, 'y': py, 'btnName': items[0], 'qmlName': 'file://' + Context.basepath + '/plugins/' + items[2], 'libName': items[3]})
+           var obj = accessBtn.createObject(acessItemsAdd, {'x': px, 'y': py, 'btnName': items[0], 'iconName': items[1], 'qmlName': 'file://' + Context.basepath + '/plugins/' + items[2], 'libName': items[3]})
 
            px += 83
 

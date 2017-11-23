@@ -1,0 +1,10 @@
+[AcessSpeed]
+Name=Display
+Name[pt_BR]=Tela
+Name[en_US]=Display
+Icon=display/display.png
+Qml=display/display.qml
+Lib=display/libpluginDisplay.so
+MoreSettings=
+
+[Plugin]

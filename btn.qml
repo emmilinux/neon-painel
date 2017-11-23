@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtGraphicalEffects 1.0
 
 
 Rectangle {
@@ -12,6 +13,7 @@ Rectangle {
     property string btnName: ''
     property string qmlName: ''
     property string libName: ''
+    property string iconName: ''
 
     MouseArea {
 
@@ -29,12 +31,36 @@ Rectangle {
     }
 
         Rectangle {
+            width: 26
+            height: 26
+            radius: 26
+            anchors.fill: parent
+            anchors.margins: 14
+            color: detailColor
+        }
+
+        Rectangle {
+            id: pluginMask
             width: 24
             height: 24
             radius: 24
             anchors.fill: parent
             anchors.margins: 16
             color: "#ffffff"
+        }
+
+        Image {
+            width: 24
+            height: 24
+            anchors.fill: parent
+            anchors.margins: 16
+            source: "file://" + Context.basepath + "/plugins/" + iconName
+
+            fillMode: Image.PreserveAspectCrop
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: pluginMask
+            }
         }
 
         Text {
