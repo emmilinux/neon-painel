@@ -16,18 +16,22 @@ ApplicationWindow {
     property var acessText: acessText
     property var acessItemsAdd: acessItemsAdd
     property var qmlShowPlugin: qmlShowPlugin
-    property var btnObj
+    property var tmpShowPlugin
 
     onActiveChanged: {
+
         if (!active) {
 
-            close()
             acessItemsAdd.visible = true
             qmlShowPlugin.visible = false
 
-            if (btnObj) {
-                btnObj.destroy()
+            if (acessoRapido.tmpShowPlugin) {
+                acessoRapido.tmpShowPlugin.destroy()
             }
+
+            delete acessoRapido.tmpShowPlugin
+
+            visible = false
         }
     }
 

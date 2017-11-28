@@ -25,7 +25,13 @@ Rectangle {
             qmlShowPlugin.visible = true
             pluginName.text = btnName
 
-            acessoRapido.btnObj = Qt.createComponent(qmlName).createObject(importPluginShow)
+            if (acessoRapido.tmpShowPlugin) {
+                acessoRapido.tmpShowPlugin.destroy()
+            }
+
+            delete acessoRapido.tmpShowPlugin
+
+            tmpShowPlugin = Qt.createComponent(qmlName).createObject(importPluginShow)
         }
 
     }

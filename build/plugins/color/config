@@ -1,0 +1,10 @@
+[AcessSpeed]
+Name=Color
+Name[pt_BR]=Cores
+Name[en_US]=Color
+Icon=color/color.png
+Qml=color/color.qml
+Lib=color/libpluginColor.so
+MoreSettings=
+
+[Plugin]

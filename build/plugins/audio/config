@@ -1,0 +1,10 @@
+[AcessSpeed]
+Name=Audio
+Name[pt_BR]=Som
+Name[en_US]=Audio
+Icon=audio/audio.png
+Qml=audio/audio.qml
+Lib=audio/libpluginAudio.so
+MoreSettings=
+
+[Plugin]

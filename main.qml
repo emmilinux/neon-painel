@@ -201,10 +201,6 @@ ApplicationWindow {
             //neonMenu.addApps()
             showAppInfo.visible = false
             acessoRapido.visible = false
-
-            if (acessoRapido.btnObj) {
-                acessoRapido.btnObj.destroy()
-            }
         }
     }
 
@@ -259,10 +255,6 @@ ApplicationWindow {
                 onClicked: {
 
                     acessoRapido.visible = false
-
-                    if (acessoRapido.btnObj) {
-                        acessoRapido.btnObj.destroy()
-                    }
 
                     showAppInfo.visible = false
                     neonMenu.x = 0;
@@ -506,10 +498,6 @@ ApplicationWindow {
                         onClicked: {
 
                             acessoRapido.visible = false
-
-                            if (acessoRapido.btnObj) {
-                                acessoRapido.btnObj.destroy()
-                            }
 
                             if (parent.moreArea) {
 
