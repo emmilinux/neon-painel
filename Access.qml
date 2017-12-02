@@ -16,22 +16,20 @@ ApplicationWindow {
     property var acessText: acessText
     property var acessItemsAdd: acessItemsAdd
     property var qmlShowPlugin: qmlShowPlugin
-    property var tmpShowPlugin
+    property var tmpShowPlugin: []
 
     onActiveChanged: {
 
-        if (!active) {
+        for (var i = 0; i < importPluginShow.children.length; i++) {
+            importPluginShow.children[i].destroy()
+        }
 
+        importPluginShow.children = []
+
+        if (!active) {
             acessItemsAdd.visible = true
             qmlShowPlugin.visible = false
-
-            if (acessoRapido.tmpShowPlugin) {
-                acessoRapido.tmpShowPlugin.destroy()
-            }
-
-            delete acessoRapido.tmpShowPlugin
-
-            visible = false
+            acessoRapido.visible = false
         }
     }
 
@@ -46,6 +44,8 @@ ApplicationWindow {
 
             onExited: {
                 acessoRapido.visible = false
+                qmlShowPlugin.visible = false
+                acessItemsAdd.visible = true
             }
         }
     }
@@ -69,17 +69,6 @@ ApplicationWindow {
             font.bold: true
 
         }
-/*
-        Rectangle {
-            width: 20
-            height: 20
-            radius: 10
-            anchors.top: parent.top
-            anchors.topMargin: 12
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            color: "#ffffff"
-        }*/
 
         Image {
             width: 20

@@ -2,7 +2,7 @@
 Name=Audio
 Name[pt_BR]=Som
 Name[en_US]=Audio
-Icon=audio/audio.png
+Icon=audio/audio2.png
 Qml=audio/audio.qml
 Lib=audio/libpluginAudio.so
 MoreSettings=

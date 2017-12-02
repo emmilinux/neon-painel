@@ -20,18 +20,10 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-
             acessItemsAdd.visible = false
             qmlShowPlugin.visible = true
             pluginName.text = btnName
-
-            if (acessoRapido.tmpShowPlugin) {
-                acessoRapido.tmpShowPlugin.destroy()
-            }
-
-            delete acessoRapido.tmpShowPlugin
-
-            tmpShowPlugin = Qt.createComponent(qmlName).createObject(importPluginShow)
+            Qt.createComponent(qmlName).createObject(importPluginShow)
         }
 
     }

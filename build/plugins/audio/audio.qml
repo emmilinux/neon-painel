@@ -5,8 +5,7 @@ import QtQuick.Controls 1.2
 Rectangle {
     x: 0
     y: 20
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
     color: "transparent"
 
     Rectangle {
@@ -16,11 +15,22 @@ Rectangle {
         border.width: 0
 
         Image {
+            id: imgAutoFalante
             x: 10
             y: 0
-            source: "file://" + Context.basepath + '/plugins/audio/audio2.png'
+            source: "file://" + Context.basepath + '/plugins/audio/audio.png'
             width: 60
             height: 60
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    volumeIdicator.x = 0
+                    Context.libraryVoidLoad(0, '0', "setVolume", libName)
+                    imgAutoFalante.opacity = 0.3
+                }
+            }
         }
 
         Rectangle {
@@ -41,7 +51,7 @@ Rectangle {
 
             Rectangle {
                 id: volumeIdicator
-                x: parseInt(((Context.libraryIntLoad("getVolume", libName) - 7) * 150) / 100)
+                x: 0
                 y: -2.5
                 width: 14
                 height: 14
@@ -59,16 +69,33 @@ Rectangle {
                     _x = (_x * 100) / 150
                     _x = parseInt(_x)
                     Context.libraryVoidLoad(0, _x.toString(), "setVolume", libName)
+
+                    if (mouseX < 5) {
+                        imgAutoFalante.opacity = 0.3
+                    } else {
+                       imgAutoFalante.opacity = 1
+                    }
                 }
             }
         }
 
         Image {
+            id: imgMicroFone
             x: 10
             y: 105
             source: "file://" + Context.basepath + '/plugins/audio/micro.png'
             width: 60
             height: 55
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    microIndicator.x = 0
+                    Context.libraryVoidLoad(0, '0', "setMicro", libName)
+                    imgMicroFone.opacity = 0.3
+                }
+            }
         }
 
         Rectangle {
@@ -89,7 +116,7 @@ Rectangle {
 
             Rectangle {
                 id: microIndicator
-                x: parseInt(((Context.libraryIntLoad("getMicro", libName) - 7) * 150) / 100)
+                x: 0
                 y: -2.5
                 width: 14
                 height: 14
@@ -107,8 +134,30 @@ Rectangle {
                     _x = (_x * 100) / 150
                     _x = parseInt(_x)
                     Context.libraryVoidLoad(0, _x.toString(), "setMicro", libName)
+
+                    if (mouseX < 5) {
+                        imgMicroFone.opacity = 0.3
+                    } else {
+                        imgMicroFone.opacity = 1
+                    }
+
                 }
             }
         }
    }
+
+    Component.onCompleted: {
+
+        volumeIdicator.x = parseInt(((Context.libraryIntLoad("getVolume", libName) - 7) * 150) / 100)
+
+        if (volumeIdicator.x < 5) {
+            imgAutoFalante.opacity = 0.3
+        }
+
+        microIndicator.x = parseInt(((Context.libraryIntLoad("getMicro", libName) - 7) * 150) / 100)
+
+        if (microIndicator.x < 5) {
+            imgMicroFone.opacity = 0.3
+        }
+    }
 }
