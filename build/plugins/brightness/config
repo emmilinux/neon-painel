@@ -1,0 +1,10 @@
+[AcessSpeed]
+Name=Brightness
+Name[pt_BR]=Brilho
+Name[en_US]=Brightness
+Icon=brightness/brightness.png
+Qml=brightness/brightness.qml
+Lib=brightness/libpluginBrightness.so
+MoreSettings=
+
+[Plugin]
