@@ -29,5 +29,4 @@ sudo apt install libxinerama-dev
 sudo apt install libx11-dev
 sudo apt install libqt5x11extras5-dev
 sudo apt install wicd
-udo apt install libxcomposite-dev
 ```
