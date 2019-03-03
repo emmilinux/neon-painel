@@ -30,3 +30,5 @@ sudo apt install libx11-dev
 sudo apt install libqt5x11extras5-dev
 sudo apt install wicd
 ```
+# Repositório migrado para:
+https://github.com/emmios/Synth_Panel
